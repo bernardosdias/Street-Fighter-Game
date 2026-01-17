@@ -64,8 +64,8 @@ def draw_hp(health, x, y):
     # CREACT 2 INSTANCES OF FIGHTERS
 
 
-figther_1 = Fighter(200, 310,WARRIOR_DATA, warrior_sheet, WARRIOR_ANIMATION_STEPS)
-figther_2 = Fighter(700, 310,WIZARD_DATA,  wizard_sheet, WIZARD_ANIMATION_STEPS)
+figther_1 = Fighter(200, 310,False, WARRIOR_DATA, warrior_sheet, WARRIOR_ANIMATION_STEPS)
+figther_2 = Fighter(700, 310,True, WIZARD_DATA,  wizard_sheet, WIZARD_ANIMATION_STEPS)
 
 
 # GAME LOOP
@@ -84,6 +84,10 @@ while run:
 
     # MOVE FIGHTERS
     figther_1.move(SCREEN_WIDTH, SCREEN_HEIGHT, screen, figther_2)
+    
+
+    #UPDATE FIGHTERS
+    figther_1.update()
 
     # DRAW FIGHTERS
     figther_1.draw_fighter(screen)

@@ -2,15 +2,16 @@ import pygame
 
 
 class Fighter():
-    def __init__(self, x, y, data, sprite_sheet, animation_steps):
+    def __init__(self, x, y, flip, data, sprite_sheet, animation_steps):
         self.size = data[0]
         self.image_scale = data[1]
         self.offset = data[2]
-        self.flip = False
+        self.flip = flip
         self.animation_list = self.load_images(sprite_sheet, animation_steps)
         self.action = 0  # 0:idel #!:run #3:attack1 #4: attack2 #5hit #6:death
         self.frame_index = 0
         self.image = self.animation_list[self.action][self.frame_index]
+        self.update_time = pygame.time.get_ticks()
         self.rect = pygame.Rect((x, y,  80, 180))
         self.vel_y = 0
         self.jump = False
@@ -87,6 +88,20 @@ class Fighter():
         self.rect.x += dx
         self.rect.y += dy
 
+    # HANDLE ANIMATION UPDATES
+
+    def update(self):
+        animation_cd = 100  # milis
+        # UPDATE IMAGE
+        self.image = self.animation_list[self.action][self.frame_index]
+        # CHECKS IF ENOUGH TIME HAS PASSED SINCE THE LAST UPDATE
+        if pygame.time.get_ticks() - self.update_time > animation_cd:
+            self.frame_index +=1
+            self.update_time = pygame.time.get_ticks()
+        # CHECK IF THE ANIMATION HAS FINISHED
+        if self.frame_index >= len(self.animation_list[self.action]):
+            self.frame_index = 0
+
     def attack(self, surface, target):
         self.attacking = True
         attacking_rect = pygame.Rect(self.rect.centerx - (
@@ -97,5 +112,7 @@ class Fighter():
         pygame.draw.rect(surface, (0, 255, 0), attacking_rect)
 
     def draw_fighter(self, surface):
-        pygame.draw.rect(surface, (255, 0, 0), self.rect)
-        surface.blit(self.image, (self.rect.x - (self.offset[0] * self.image_scale), self.rect.y - self.offset[1] * self.image_scale))
+        img = pygame.transform.flip(self.image, self.flip, False)
+        #pygame.draw.rect(surface, (255, 0, 0), self.rect)
+        surface.blit(
+            img, (self.rect.x - (self.offset[0] * self.image_scale), self.rect.y - self.offset[1] * self.image_scale))
