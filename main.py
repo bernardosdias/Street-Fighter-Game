@@ -1,6 +1,8 @@
 import pygame
 from fighter import Fighter
+from pygame import mixer
 
+mixer.init()
 pygame.init()
 
 # CREATE GAME WINDOW
@@ -17,6 +19,13 @@ YELLOW = (255, 255, 0)
 RED = (255, 0, 0)
 WHITE = (255, 255, 255)
 
+# DEFINE GAME VARIABLES
+intro_count = 3
+last_count_update = pygame.time.get_ticks()
+score = [0, 0]  # PLAYER SCORES. [PI, P2]
+round_over = False
+ROUND_OVER_COOLDOWN = 2000
+
 # DEFINE FIGHTER VARIABLES
 WARRIOR_SIZE = 162
 WARRIOR_SCALE = 4
@@ -30,17 +39,44 @@ WIZARD_DATA = [WIZARD_SIZE, WIZARD_SCALE, WIZARD_OFFSET]
 screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 pygame.display.set_caption("Street Fighter")
 
-#LOAD WARRIOR AND WIZARD
+# LOAD MUSIC AND SOUNDS
+pygame.mixer.music.load("multimedia/audio/music.mp3")
+pygame.mixer.music.set_volume(0.1)
+pygame.mixer.music.play(-1, 0.0, 5000)
+sword_sound = pygame.mixer.Sound("multimedia/audio/sword.wav")
+sword_sound.set_volume(0.2)
+staff_sound = pygame.mixer.Sound("multimedia/audio/staff.wav")
+staff_sound.set_volume(0.2)
 
-warrior_sheet = pygame.image.load("multimedia/images/warrior/warrior.png").convert_alpha()
-wizard_sheet = pygame.image.load("multimedia/images/wizard/wizard.png").convert_alpha()
+# LOAD WARRIOR AND WIZARD
+
+warrior_sheet = pygame.image.load(
+    "multimedia/images/warrior/warrior.png").convert_alpha()
+wizard_sheet = pygame.image.load(
+    "multimedia/images/wizard/wizard.png").convert_alpha()
+
+# LOAD VICTORY IMAGE
+victory_img = pygame.image.load(
+    "multimedia/images/icons/victory.png").convert_alpha()
+
+# DEFINE FONT
+count_font = pygame.font.Font("multimedia/fonts/Turok.ttf", 80)
+score_font = pygame.font.Font("multimedia/fonts/Turok.ttf", 30)
+
+# FUNCTION FOR TEXT DRAW
+
+
+def draw_text(text, font, text_col, x, y):
+    img = font.render(text, True, text_col)
+    screen.blit(img, (x, y))
+
 
 # LOAD BACKGROUD IMAGE
 
 bg_image = pygame.image.load(
     "multimedia/images/background/background.jpg").convert_alpha()
 
-#DEFINE NUMBER OF STEPS IN EACH ANIMATION
+# DEFINE NUMBER OF STEPS IN EACH ANIMATION
 
 WARRIOR_ANIMATION_STEPS = [10, 8, 1, 7, 7, 3, 7]
 WIZARD_ANIMATION_STEPS = [8, 8, 1, 8, 8, 3, 7]
@@ -64,8 +100,10 @@ def draw_hp(health, x, y):
     # CREACT 2 INSTANCES OF FIGHTERS
 
 
-figther_1 = Fighter(200, 310,False, WARRIOR_DATA, warrior_sheet, WARRIOR_ANIMATION_STEPS)
-figther_2 = Fighter(700, 310,True, WIZARD_DATA,  wizard_sheet, WIZARD_ANIMATION_STEPS)
+figther_1 = Fighter(1, 200, 310, False, WARRIOR_DATA,
+                    warrior_sheet, WARRIOR_ANIMATION_STEPS, sword_sound)
+figther_2 = Fighter(2, 700, 310, True, WIZARD_DATA,
+                    wizard_sheet, WIZARD_ANIMATION_STEPS, staff_sound)
 
 
 # GAME LOOP
@@ -78,20 +116,54 @@ while run:
     # DRAW BACKGROUND
     draw_bg()
 
-    # SHOW PLAYER HP
+    # SHOW PLAYER HP AND SCORE
     draw_hp(figther_1.health, 20, 20)
     draw_hp(figther_2.health, 580, 20)
+    draw_text("P1:" + str(score[0]), score_font, RED, 20, 60)
+    draw_text("P2:" + str(score[1]), score_font, RED, 580, 60)
 
-    # MOVE FIGHTERS
-    figther_1.move(SCREEN_WIDTH, SCREEN_HEIGHT, screen, figther_2)
-    
+    if intro_count <= 0:
+        # MOVE FIGHTERS
+        figther_1.move(SCREEN_WIDTH, SCREEN_HEIGHT, screen, figther_2, round_over)
+        figther_2.move(SCREEN_WIDTH, SCREEN_HEIGHT, screen, figther_1, round_over)
+    else:
+        # DISPLAY COUNT TIMER
+        draw_text(str(intro_count), count_font, RED,
+                  SCREEN_WIDTH/2, SCREEN_HEIGHT / 3)
+        if (pygame.time.get_ticks() - last_count_update) >= 1000:
+            intro_count -= 1
+            last_count_update = pygame.time.get_ticks()
 
-    #UPDATE FIGHTERS
+    # UPDATE FIGHTERS
     figther_1.update()
+    figther_2.update()
 
     # DRAW FIGHTERS
     figther_1.draw_fighter(screen)
     figther_2.draw_fighter(screen)
+
+    # CHECK FOR PLAYER DEFEATED
+    if round_over == False:
+        if figther_1.alive == False:
+            score[1] += 1
+            round_over = True
+            round_over_time = pygame.time.get_ticks()
+            print(score)
+        elif figther_2.alive == False:
+            score[0] += 1
+            round_over = True
+            round_over_time = pygame.time.get_ticks()
+    else:
+        # DISPLAY VICTORY IMAGE
+        screen.blit(victory_img, (360, 150))
+        if pygame.time.get_ticks() - round_over_time > ROUND_OVER_COOLDOWN:
+            round_over = False
+            intro_count = 3
+            figther_1 = Fighter(1, 200, 310, False, WARRIOR_DATA,
+                    warrior_sheet, WARRIOR_ANIMATION_STEPS, sword_sound)
+            figther_2 = Fighter(2, 700, 310, True, WIZARD_DATA,
+                    wizard_sheet, WIZARD_ANIMATION_STEPS, staff_sound)
+
 
     # EVENT HANDLER
     for event in pygame.event.get():
