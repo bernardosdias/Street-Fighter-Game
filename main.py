@@ -17,13 +17,33 @@ YELLOW = (255, 255, 0)
 RED = (255, 0, 0)
 WHITE = (255, 255, 255)
 
+# DEFINE FIGHTER VARIABLES
+WARRIOR_SIZE = 162
+WARRIOR_SCALE = 4
+WARRIOR_OFFSET = [72, 56]
+WARRIOR_DATA = [WARRIOR_SIZE, WARRIOR_SCALE, WARRIOR_OFFSET]
+WIZARD_SIZE = 250
+WIZARD_SCALE = 3
+WIZARD_OFFSET = [112, 107]
+WIZARD_DATA = [WIZARD_SIZE, WIZARD_SCALE, WIZARD_OFFSET]
+
 screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 pygame.display.set_caption("Street Fighter")
+
+#LOAD WARRIOR AND WIZARD
+
+warrior_sheet = pygame.image.load("multimedia/images/warrior/warrior.png").convert_alpha()
+wizard_sheet = pygame.image.load("multimedia/images/wizard/wizard.png").convert_alpha()
 
 # LOAD BACKGROUD IMAGE
 
 bg_image = pygame.image.load(
     "multimedia/images/background/background.jpg").convert_alpha()
+
+#DEFINE NUMBER OF STEPS IN EACH ANIMATION
+
+WARRIOR_ANIMATION_STEPS = [10, 8, 1, 7, 7, 3, 7]
+WIZARD_ANIMATION_STEPS = [8, 8, 1, 8, 8, 3, 7]
 
 # DRAW BACKGROUND
 
@@ -44,8 +64,8 @@ def draw_hp(health, x, y):
     # CREACT 2 INSTANCES OF FIGHTERS
 
 
-figther_1 = Fighter(200, 310)
-figther_2 = Fighter(700, 310)
+figther_1 = Fighter(200, 310,WARRIOR_DATA, warrior_sheet, WARRIOR_ANIMATION_STEPS)
+figther_2 = Fighter(700, 310,WIZARD_DATA,  wizard_sheet, WIZARD_ANIMATION_STEPS)
 
 
 # GAME LOOP
