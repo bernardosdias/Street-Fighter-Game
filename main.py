@@ -1,6 +1,7 @@
 import pygame
-from fighter import Fighter
+from fighters.fighter import Fighter
 from pygame import mixer
+from frames.menu import MenuFrame
 
 mixer.init()
 pygame.init()
@@ -99,7 +100,7 @@ def draw_game_wins(screen, wins, x_start, y, radius=12, spacing=40):
             pygame.draw.circle(screen, YELLOW, (x, y), radius)
         else:
             pygame.draw.circle(screen, YELLOW, (x, y), radius, 2)
-        
+
 
 # DRAW HP
 
@@ -118,6 +119,9 @@ figther_1 = Fighter(1, 200, 310, False, WARRIOR_DATA,
 figther_2 = Fighter(2, 700, 310, True, WIZARD_DATA,
                     wizard_sheet, WIZARD_ANIMATION_STEPS, staff_sound)
 
+#CREATE MENU FRAME
+menu_frame = MenuFrame(SCREEN_WIDTH, SCREEN_HEIGHT)
+current_frame = menu_frame
 
 # GAME LOOP
 run = True
@@ -126,73 +130,95 @@ while run:
 
     clock.tick(FPS)
 
-    # DRAW BACKGROUND
-    draw_bg()
-
-    # SHOW PLAYER HP AND SCORE
-    draw_hp(figther_1.health, 20, 20)
-    draw_hp(figther_2.health, 580, 20)
-    draw_game_wins(screen, score[0], 30, 80)
-    draw_game_wins(screen, score[1], 590, 80)
-
-    if intro_count <= 0:
-        # MOVE FIGHTERS
-        figther_1.move(SCREEN_WIDTH, SCREEN_HEIGHT,
-                       screen, figther_2, round_over)
-        figther_2.move(SCREEN_WIDTH, SCREEN_HEIGHT,
-                       screen, figther_1, round_over)
-    else:
-        # DISPLAY COUNT TIMER
-        draw_text(str(intro_count), count_font, RED,
-                  SCREEN_WIDTH/2, SCREEN_HEIGHT / 3)
-        if (pygame.time.get_ticks() - last_count_update) >= 1000:
-            intro_count -= 1
-            last_count_update = pygame.time.get_ticks()
-
-    # UPDATE FIGHTERS
-    figther_1.update()
-    figther_2.update()
-
-    # DRAW FIGHTERS
-    figther_1.draw_fighter(screen)
-    figther_2.draw_fighter(screen)
-
-    # CHECK FOR PLAYER DEFEATED
-    if round_over == False:
-        if figther_1.alive == False:
-            score[1] += 1
-            round_over = True
-            round_over_time = pygame.time.get_ticks()
-            print(score)
-        elif figther_2.alive == False:
-            score[0] += 1
-            round_over = True
-            round_over_time = pygame.time.get_ticks()
-    else:
-        # DISPLAY VICTORY IMAGE
-        screen.blit(victory_img, (360, 150))
-        if pygame.time.get_ticks() - round_over_time > ROUND_OVER_COOLDOWN:
-            round_over = False
-            intro_count = 3
-            figther_1 = Fighter(1, 200, 310, False, WARRIOR_DATA,
-                                warrior_sheet, WARRIOR_ANIMATION_STEPS, sword_sound)
-            figther_2 = Fighter(2, 700, 310, True, WIZARD_DATA,
-                                wizard_sheet, WIZARD_ANIMATION_STEPS, staff_sound)
-
-    if score[0] or score[1] == 3:
-        game_over == True
-        figther_1 = Fighter(1, 200, 310, False, WARRIOR_DATA,
-                                warrior_sheet, WARRIOR_ANIMATION_STEPS, sword_sound)
-        figther_2 = Fighter(2, 700, 310, True, WIZARD_DATA,
-                                wizard_sheet, WIZARD_ANIMATION_STEPS, staff_sound)    
-
-    # EVENT HANDLER
-    for event in pygame.event.get():
+    events = pygame.event.get()
+    for event in events:
         if event.type == pygame.QUIT:
-            run = False
+            pygame.quit()
+            exit()
 
-    # UPDATE DISPLAY
+    current_frame.handle_events(events)
+    current_frame.update()
+    current_frame.draw(screen)
+
     pygame.display.update()
+
+    # clock.tick(FPS)
+
+    # events = pygame.event.get()
+
+    # for event in events:
+    #     if event.type == pygame.QUIT:
+    #         pygame.quit()
+    #         exit()
+    
+    # next_frame = current_frame.handle_events(events)
+    # if next_frame == "character_selection":
+    #     #from character_selection import CharacterSelection
+    #     #current_frame = CharacterSelection(SCREEN_WIDTH, SCREEN_HEIGHT)
+    
+    # current_frame.update()
+    # current_frame.draw(screen)
+
+    # # DRAW BACKGROUND
+    # draw_bg()
+
+    # # SHOW PLAYER HP AND SCORE
+    # draw_hp(figther_1.health, 20, 20)
+    # draw_hp(figther_2.health, 580, 20)
+    # draw_game_wins(screen, score[0], 30, 80)
+    # draw_game_wins(screen, score[1], 590, 80)
+
+    # if intro_count <= 0:
+    #     # MOVE FIGHTERS
+    #     figther_1.move(SCREEN_WIDTH, SCREEN_HEIGHT,
+    #                    screen, figther_2, round_over)
+    #     figther_2.move(SCREEN_WIDTH, SCREEN_HEIGHT,
+    #                    screen, figther_1, round_over)
+    # else:
+    #     # DISPLAY COUNT TIMER
+    #     draw_text(str(intro_count), count_font, RED,
+    #               SCREEN_WIDTH/2, SCREEN_HEIGHT / 3)
+    #     if (pygame.time.get_ticks() - last_count_update) >= 1000:
+    #         intro_count -= 1
+    #         last_count_update = pygame.time.get_ticks()
+
+    # # UPDATE FIGHTERS
+    # figther_1.update()
+    # figther_2.update()
+
+    # # DRAW FIGHTERS
+    # figther_1.draw_fighter(screen)
+    # figther_2.draw_fighter(screen)
+
+    # # CHECK FOR PLAYER DEFEATED
+    # if round_over == False:
+    #     if figther_1.alive == False:
+    #         score[1] += 1
+    #         round_over = True
+    #         round_over_time = pygame.time.get_ticks()
+    #         print(score)
+    #     elif figther_2.alive == False:
+    #         score[0] += 1
+    #         round_over = True
+    #         round_over_time = pygame.time.get_ticks()
+    # else:
+    #     # DISPLAY VICTORY IMAGE
+    #     screen.blit(victory_img, (360, 150))
+    #     if pygame.time.get_ticks() - round_over_time > ROUND_OVER_COOLDOWN:
+    #         round_over = False
+    #         intro_count = 3
+    #         figther_1 = Fighter(1, 200, 310, False, WARRIOR_DATA,
+    #                             warrior_sheet, WARRIOR_ANIMATION_STEPS, sword_sound)
+    #         figther_2 = Fighter(2, 700, 310, True, WIZARD_DATA,
+    #                             wizard_sheet, WIZARD_ANIMATION_STEPS, staff_sound)
+
+    # # EVENT HANDLER
+    # for event in pygame.event.get():
+    #     if event.type == pygame.QUIT:
+    #         run = False
+
+    # # UPDATE DISPLAY
+    # pygame.display.update()
 
 # EXIT PYGAME
 pygame.quit()
