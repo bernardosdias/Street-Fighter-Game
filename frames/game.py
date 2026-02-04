@@ -15,6 +15,7 @@ class GameFrame:
         self.height = height
         self.player1_character = player1_character
         self.player2_character = player2_character
+        self.ground_y = self.height - 110
 
         self.WHITE = (255, 255, 255)
         self.RED = (255, 0, 0)
@@ -37,7 +38,7 @@ class GameFrame:
         self.fighter1 = Fighter(
             player=1,
             x=200,
-            y=310,
+            y=self.ground_y,
             flip=False,
             character_name=self.player1_character,
             sound=self._get_character_sound(self.player1_character)
@@ -46,7 +47,7 @@ class GameFrame:
         self.fighter2 = Fighter(
             player=2,
             x=700,
-            y=310,
+            y=self.ground_y,
             flip=True,
             character_name=self.player2_character,
             sound=self._get_character_sound(self.player2_character)
@@ -54,19 +55,28 @@ class GameFrame:
 
     def _get_character_sound(self, character_name):
         """
-        Retorna o som apropriado para cada personagem.
-        Podes expandir isto para ter sons específicos por personagem.
+        Carrega e retorna o som específico da personagem.
         """
-        # Por agora, usa sword_sound para todos
-        # Podes adicionar lógica aqui para sons específicos:
-        # if character_name in ["Warrior", "Skeleton"]:
-        #     return self.sword_sound
-        # elif character_name in ["Wizard"]:
-        #     return self.staff_sound
-        # else:
-        #     return self.generic_sound
-
-        return self.sword_sound
+        if character_name not in CHARACTERS:
+            print(f"⚠️ Personagem '{character_name}' não encontrada, usando som padrão")
+            return self.default_sound
+        
+        # Obter o nome do ficheiro de som do dicionário CHARACTERS
+        sound_file = CHARACTERS[character_name].get("attack_sound", "sword.wav")
+        
+        # Construir o caminho completo
+        sound_path = os.path.join("multimedia/audio", sound_file)
+        
+        # Tentar carregar o som
+        try:
+            sound = pygame.mixer.Sound(sound_path)
+            sound.set_volume(0.2)
+            print(f"✅ Som carregado para {character_name}: {sound_file}")
+            return sound
+        except Exception as e:
+            print(f"❌ Erro ao carregar som {sound_path}: {e}")
+            print(f"   Usando som padrão para {character_name}")
+            return self.default_sound
 
     def _load_assets(self):
         # LOAD MUSIC AND SOUNDS
@@ -74,11 +84,14 @@ class GameFrame:
         pygame.mixer.music.set_volume(0.1)
         pygame.mixer.music.play(-1, 0.0, 5000)
 
-        self.sword_sound = pygame.mixer.Sound("multimedia/audio/sword.wav")
-        self.sword_sound.set_volume(0.2)
-
-        self.staff_sound = pygame.mixer.Sound("multimedia/audio/staff.wav")
-        self.staff_sound.set_volume(0.2)
+        # Carregar som padrão (fallback)
+        try:
+            self.default_sound = pygame.mixer.Sound("multimedia/audio/sword.wav")
+            self.default_sound.set_volume(0.2)
+        except:
+            # Se nem o sword.wav existir, criar um som silencioso
+            self.default_sound = pygame.mixer.Sound(buffer=bytes(100))
+            print("⚠️ Som padrão não encontrado, usando som silencioso")
 
         # LOAD BACKGROUND AND VICTORY IMAGES
         self.bg_image = pygame.image.load(
@@ -173,7 +186,7 @@ class GameFrame:
         self.fighter1 = Fighter(
             player=1,
             x=200,
-            y=310,
+            y=self.ground_y,
             flip=False,
             character_name=self.player1_character,
             sound=self._get_character_sound(self.player1_character)
@@ -182,7 +195,7 @@ class GameFrame:
         self.fighter2 = Fighter(
             player=2,
             x=700,
-            y=310,
+            y=self.ground_y,
             flip=True,
             character_name=self.player2_character,
             sound=self._get_character_sound(self.player2_character)

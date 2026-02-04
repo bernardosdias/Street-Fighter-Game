@@ -4,6 +4,9 @@ CHARACTERS = {
         "scale": 4,
         "size": 162,
         "offset": [0, 0],
+        "foot_offset": 62,
+        "attack_range": 2.5,
+        "attack_sound": "sword.wav",
         "animations": {
             "idle": ("Idle.png", 10),
             "run": ("Run.png", 8),
@@ -18,6 +21,9 @@ CHARACTERS = {
         "scale": 3,
         "size": 250,
         "offset": [0, 0],
+        "foot_offset": 85,
+        "attack_range": 2.5,
+        "attack_sound": "staff.wav",
         "animations": {
             "idle": ("Idle.png", 8),
             "run": ("Run.png", 8),
@@ -32,6 +38,9 @@ CHARACTERS = {
         "scale": 2,
         "size": 150,
         "offset": [0, 0],
+        "foot_offset": 50,
+        "attack_range": 2.5,
+        "attack_sound": "sword.wav",
         "animations": {
             "idle": ("Idle.png", 4),
             "run": ("Run.png", 8),
@@ -45,9 +54,12 @@ CHARACTERS = {
         "scale": 2,
         "size": 100,
         "offset": [0, 0],
+        "foot_offset": 30,
+        "attack_range": 2.5,
+        "attack_sound": "bite.mp3",
         "animations": {
             "idle": ("Flight.png", 8),
-            "run": ("Run.png", 8),
+            "run": ("Flight.png", 8),
             "attack": ("Attack.png", 8),
             "hit": ("Take Hit.png", 4),
             "death": ("Death.png", 4),
@@ -58,11 +70,14 @@ CHARACTERS = {
         "scale": 2,
         "size": 150,
         "offset": [0, 0],
+        "foot_offset": 50,
+        "attack_range": 2.5,
+        "attack_sound": "sword.wav",
         "animations": {
             "idle": ("Idle.png", 4),
-            "run": ("Run.png", 4),
-            "attack1": ("Attack.png", 8),
-            "attack2": ("Shield.png", 4),
+            "run": ("Walk.png", 4),
+            "attack": ("Attack.png", 8),
+            "Shield": ("Shield.png", 4),
             "hit": ("Take Hit.png", 4),
             "death": ("Death.png", 4),
         }
@@ -72,6 +87,9 @@ CHARACTERS = {
         "scale": 2,
         "size": 100,
         "offset": [0, 0],
+        "foot_offset": 50,
+        "attack_range": 2.5,
+        "attack_sound": "slap.wav",
         "animations": {
             "idle": ("Idle.png", 4),
             "run": ("Run.png", 8),
@@ -85,11 +103,14 @@ CHARACTERS = {
         "scale": 2,
         "size": 100,
         "offset": [0, 0],
+        "foot_offset": 30,
+        "attack_range": 2.5,
+        "attack_sound": "fireball.wav",
         "animations": {
             "idle": ("Idle.png", 9),
-            "run": ("Run.png", 9),
+            "run": ("Walk.png", 9),
             "attack": ("Attack.png", 16),
-            "hit": ("Take Hit.png", 3),
+            "hit": ("Get Hit.png", 3),
             "death": ("Death.png", 8),
         }
     }

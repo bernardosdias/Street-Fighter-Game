@@ -136,18 +136,30 @@ class CharacterSelectFrame:
         sheet = character["image"]
         size = character["size"]
         scale = character["scale"]
+        offset_x, offset_y = character.get("offset", [0, 0])
+
+        sheet_width = sheet.get_width()
+        sheet_height = sheet.get_height()
+        frame_count = character["idle_frames"]
+
+        frame_width = sheet_width // frame_count
+        frame_height = sheet_height
+
+        frame_x = self.anim_index * frame_width
+
+        if frame_x + frame_width > sheet_width:
+            self.anim_index = 0
+            frame_x = 0
 
         # Extrair o frame atual
-        frame = sheet.subsurface(self.anim_index * size, 0, size, size)
+        frame = sheet.subsurface(frame_x, 0, frame_width, frame_height)
 
         # Escalar o frame
         preview_image = pygame.transform.scale(
-            frame, (int(size * scale), int(size * scale)))
-
+            frame, (int(frame_width * scale), int(frame_height * scale)))
         # Centralizar na tela
         screen.blit(preview_image, (self.screen_width //
-                    2 - preview_image.get_width() // 2, 150))
-
+                    2 - preview_image.get_width() // 2 + offset_x, 300 - preview_image.get_height() // 2 + offset_y))
         # Nome da personagem selecionada (grande)
         name_surface = self.title_font.render(
             character["name"], True, (255, 255, 0))

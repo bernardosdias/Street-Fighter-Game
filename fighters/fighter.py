@@ -1,17 +1,18 @@
 import pygame
 from characters.characters import CHARACTERS
 from fighters.animation_loader import load_animation
+import os
 
 
 class Fighter():
     def __init__(self, player, x, y, flip, character_name, sound):
         """
         Inicializa um Fighter usando o novo sistema de personagens.
-        
+
         Args:
             player (int): Número do jogador (1 ou 2)
             x (int): Posição X inicial
-            y (int): Posição Y inicial
+            y (int): Posição Y inicial (posição do chão onde os pés devem estar)
             flip (bool): Se a personagem deve ser virada horizontalmente
             character_name (str): Nome da personagem do dicionário CHARACTERS
             sound (pygame.mixer.Sound): Som de ataque
@@ -19,30 +20,45 @@ class Fighter():
         self.player = player
         self.flip = flip
         self.attack_sound = sound
-        
+
         # Carregar dados da personagem
         if character_name not in CHARACTERS:
-            raise ValueError(f"Personagem '{character_name}' não encontrada em CHARACTERS")
-        
+            raise ValueError(
+                f"Personagem '{character_name}' não encontrada em CHARACTERS")
+
         self.character_data = CHARACTERS[character_name]
         self.character_name = character_name
         self.scale = self.character_data["scale"]
-        
+        self.size = self.character_data["size"]
+
         # Carregar animações
         self.animation_list = self.load_character_animations()
-        
+
         # Estado da animação
         self.action = 0  # 0:idle #1:run #2:jump #3:attack1 #4:attack2 #5:hit #6:death
         self.frame_index = 0
         self.image = self.animation_list[self.action][self.frame_index]
         self.update_time = pygame.time.get_ticks()
-        
+
+        # Offset para ajustar os pés (em pixels na imagem original)
+        self.foot_offset = self.character_data.get("foot_offset", 0)
+
+        # Offset geral da personagem
+        self.offset = self.character_data.get("offset", [0, 0])
+
+        # CRITICAL: Criar hitbox pequena e consistente para colisões
+        # A hitbox não muda com a scale - é sempre do mesmo tamanho
+        hitbox_width = 80  # Largura fixa da hitbox
+        hitbox_height = 180  # Altura fixa da hitbox
+
+        self.rect = pygame.Rect(0, 0, hitbox_width, hitbox_height)
+        self.rect.midbottom = (x, y)  # Posicionar pés no chão
+
         # Propriedades físicas
-        self.rect = pygame.Rect((x, y, 80, 180))
         self.vel_y = 0
         self.running = False
         self.jump = False
-        
+
         # Propriedades de combate
         self.attack_type = 0
         self.attacking = False
@@ -50,9 +66,6 @@ class Fighter():
         self.hit = False
         self.health = 100
         self.alive = True
-        
-        # Offset para desenhar (ajustar conforme necessário)
-        self.offset = (50, 50)
 
     def load_character_animations(self):
         """
@@ -61,80 +74,82 @@ class Fighter():
         """
         animations = self.character_data["animations"]
         animation_list = []
-        
+
         # Mapeamento de ações para nomes de animações
         # Índice: [idle, run, jump, attack1, attack2, hit, death]
         action_map = {
             0: "idle",
-            1: "run", 
+            1: "run",
             2: "jump",      # Pode não existir em todas as personagens
             3: "attack1",   # ou "attack" se não houver attack1
             4: "attack2",   # Pode não existir
             5: "hit",
             6: "death"
         }
-        
+
         for action_index in range(7):
             action_name = action_map[action_index]
-            
+
             # Tentar encontrar a animação apropriada
             if action_name in animations:
                 anim_path, frame_count = animations[action_name]
-                frames = self.load_animation_from_spritesheet(anim_path, frame_count)
+                frames = self.load_animation_from_spritesheet(
+                    anim_path, frame_count)
                 animation_list.append(frames)
             elif action_name == "attack1" and "attack" in animations:
                 # Fallback: se não há attack1, usa attack
                 anim_path, frame_count = animations["attack"]
-                frames = self.load_animation_from_spritesheet(anim_path, frame_count)
+                frames = self.load_animation_from_spritesheet(
+                    anim_path, frame_count)
                 animation_list.append(frames)
             elif action_name == "attack2" and "attack1" in animations:
                 # Fallback: se não há attack2, usa attack1
                 anim_path, frame_count = animations["attack1"]
-                frames = self.load_animation_from_spritesheet(anim_path, frame_count)
+                frames = self.load_animation_from_spritesheet(
+                    anim_path, frame_count)
                 animation_list.append(frames)
             elif action_name == "attack2" and "attack" in animations:
                 # Fallback: se não há attack2 nem attack1, usa attack
                 anim_path, frame_count = animations["attack"]
-                frames = self.load_animation_from_spritesheet(anim_path, frame_count)
+                frames = self.load_animation_from_spritesheet(
+                    anim_path, frame_count)
                 animation_list.append(frames)
             elif action_name == "jump":
                 # Se não há jump, usa idle como fallback
                 anim_path, frame_count = animations["idle"]
-                frames = self.load_animation_from_spritesheet(anim_path, frame_count)
+                frames = self.load_animation_from_spritesheet(
+                    anim_path, frame_count)
                 animation_list.append(frames)
             else:
                 # Fallback genérico: usar idle
                 anim_path, frame_count = animations["idle"]
-                frames = self.load_animation_from_spritesheet(anim_path, frame_count)
+                frames = self.load_animation_from_spritesheet(
+                    anim_path, frame_count)
                 animation_list.append(frames)
-        
+
         return animation_list
 
-    def load_animation_from_spritesheet(self, anim_path, frame_count):
+    def load_animation_from_spritesheet(self, anim_filename, frame_count):
         """
         Carrega uma animação usando a função load_animation do animation_loader.
-        
+
         Args:
-            anim_path (str): Caminho completo para o ficheiro de spritesheet
-            frame_count (int): Número de frames na animação (não usado aqui, 
-                              load_animation calcula automaticamente)
-            
+            anim_filename (str): Nome do ficheiro de spritesheet
+            frame_count (int): Número de frames na animação
+
         Returns:
             list: Lista de superfícies pygame (frames)
         """
-        import os
-        
         try:
             # Separar o path e o filename
-            directory = os.path.dirname(anim_path)
-            filename = os.path.basename(anim_path)
-            
+            directory = self.character_data["path"]
+
             # Usar a função load_animation que já existe!
-            frames = load_animation(directory, filename, self.scale)
+            frames = load_animation(directory, anim_filename, self.scale)
             return frames
-            
+
         except Exception as e:
-            print(f"Erro ao carregar {anim_path}: {e}")
+            print(f"Erro ao carregar {anim_filename}: {e}")
             # Retorna uma superfície em branco como fallback
             fallback = pygame.Surface((100, 100))
             fallback.fill((255, 0, 255))  # Magenta para indicar erro
@@ -201,7 +216,6 @@ class Fighter():
                         self.attack_type = 2
         # APPLY GRAVITY
         self.vel_y += GRAVITY
-
         dy += self.vel_y
 
         # HANDLE COLISION WITH BORDERS
@@ -230,7 +244,7 @@ class Fighter():
 
     def update(self):
         """Atualiza a animação e estado do fighter"""
-        
+
         # CHECK WHAT ACTION THE PLAYER IS DOING
         if self.health <= 0:
             self.health = 0
@@ -280,10 +294,15 @@ class Fighter():
             # EXECUTE ATTACK
             self.attacking = True
             self.attack_sound.play()
+
+            # Obter o attack_range da personagem
+            attack_range = self.character_data.get("attack_range", 2.0)
+
             attacking_rect = pygame.Rect(
-                self.rect.centerx - (2 * self.rect.width * self.flip), 
-                self.rect.y, 
-                2 * self.rect.width, 
+                self.rect.centerx -
+                (attack_range * self.rect.width * self.flip),
+                self.rect.y,
+                attack_range * self.rect.width,
                 self.rect.height
             )
             if attacking_rect.colliderect(target.rect):
@@ -300,9 +319,37 @@ class Fighter():
             self.update_time = pygame.time.get_ticks()
 
     def draw_fighter(self, surface):
-        """Desenha o fighter na superfície"""
+        """
+        Desenha o fighter na superfície.
+
+        A estratégia aqui é:
+        1. A hitbox (self.rect) é pequena e consistente
+        2. A imagem é grande e escalada
+        3. Alinhamos os pés da imagem com o fundo da hitbox
+        """
+        # Pegar a imagem atual
         img = pygame.transform.flip(self.image, self.flip, False)
-        # Calcular offset baseado no tamanho da imagem
-        draw_x = self.rect.x - (self.offset[0])
-        draw_y = self.rect.y - (self.offset[1])
+
+        # Calcular onde desenhar a imagem para que os pés fiquem alinhados
+        # com o fundo da hitbox
+
+        # Os pés da imagem estão a self.foot_offset pixels do fundo
+        # (medido na imagem escalada)
+        foot_offset_scaled = self.foot_offset * self.scale
+
+        # Queremos que os pés da imagem coincidam com rect.bottom
+        # Então a posição Y do topo da imagem é:
+        draw_y = self.rect.bottom - img.get_height() + foot_offset_scaled
+
+        # Centralizar horizontalmente na hitbox
+        draw_x = self.rect.centerx - (img.get_width() // 2)
+
+        # Aplicar offset adicional se existir
+        draw_x += self.offset[0]
+        draw_y += self.offset[1]
+
+        # Desenhar
         surface.blit(img, (draw_x, draw_y))
+
+        # DEBUG: Descomentar para ver a hitbox
+        # pygame.draw.rect(surface, (255, 0, 0), self.rect, 2)
