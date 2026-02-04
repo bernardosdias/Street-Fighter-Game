@@ -3,6 +3,7 @@ CHARACTERS = {
         "path": "warrior",
         "scale": 4,
         "size": 162,
+        "offset": [72, 56],
         "animations": {
             "idle": ("Idle.png", 10),
             "run": ("Run.png", 8),
@@ -16,6 +17,7 @@ CHARACTERS = {
         "path": "wizard",
         "scale": 3,
         "size": 250,
+        "offset": [112, 107],
         "animations": {
             "idle": ("Idle.png", 8),
             "run": ("Run.png", 8),
@@ -29,6 +31,7 @@ CHARACTERS = {
         "path": "Goblin",
         "scale": 2,
         "size": 150,
+        "offset": [44, 39],
         "animations": {
             "idle": ("Idle.png", 4),
             "run": ("Run.png", 8),
@@ -41,6 +44,7 @@ CHARACTERS = {
         "path": "Flying Eye",
         "scale": 2,
         "size": 100,
+        "offset": [0, 0],
         "animations": {
             "idle": ("Flight.png", 8),
             "run": ("Run.png", 8),
@@ -53,6 +57,7 @@ CHARACTERS = {
         "path": "skeleton",
         "scale": 2,
         "size": 150,
+        "offset": [30, 40],
         "animations": {
             "idle": ("Idle.png", 4),
             "run": ("Run.png", 4),
@@ -66,6 +71,7 @@ CHARACTERS = {
         "path": "mushroom",
         "scale": 2,
         "size": 100,
+        "offset": [0, 0],
         "animations": {
             "idle": ("Idle.png", 4),
             "run": ("Run.png", 8),
@@ -78,6 +84,7 @@ CHARACTERS = {
         "path": "Worm",
         "scale": 2,
         "size": 100,
+        "offset": [0, 0],
         "animations": {
             "idle": ("Idle.png", 9),
             "run": ("Run.png", 9),
