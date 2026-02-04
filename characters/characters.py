@@ -3,7 +3,7 @@ CHARACTERS = {
         "path": "warrior",
         "scale": 4,
         "size": 162,
-        "offset": [72, 56],
+        "offset": [0, 0],
         "animations": {
             "idle": ("Idle.png", 10),
             "run": ("Run.png", 8),
@@ -17,7 +17,7 @@ CHARACTERS = {
         "path": "wizard",
         "scale": 3,
         "size": 250,
-        "offset": [112, 107],
+        "offset": [0, 0],
         "animations": {
             "idle": ("Idle.png", 8),
             "run": ("Run.png", 8),
@@ -31,7 +31,7 @@ CHARACTERS = {
         "path": "Goblin",
         "scale": 2,
         "size": 150,
-        "offset": [44, 39],
+        "offset": [0, 0],
         "animations": {
             "idle": ("Idle.png", 4),
             "run": ("Run.png", 8),
@@ -57,7 +57,7 @@ CHARACTERS = {
         "path": "skeleton",
         "scale": 2,
         "size": 150,
-        "offset": [30, 40],
+        "offset": [0, 0],
         "animations": {
             "idle": ("Idle.png", 4),
             "run": ("Run.png", 4),
