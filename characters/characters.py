@@ -42,7 +42,7 @@ CHARACTERS = {
         "scale": 2,
         "size": 100,
         "animations": {
-            "idle": ("Idle.png", 8),
+            "idle": ("Flight.png", 8),
             "run": ("Run.png", 8),
             "attack": ("Attack.png", 8),
             "hit": ("Take Hit.png", 4),
