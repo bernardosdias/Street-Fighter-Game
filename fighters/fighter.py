@@ -1,42 +1,144 @@
 import pygame
+from characters.characters import CHARACTERS
+from fighters.animation_loader import load_animation
 
 
 class Fighter():
-    def __init__(self, player,  x, y, flip, data, sprite_sheet, animation_steps, sound):
+    def __init__(self, player, x, y, flip, character_name, sound):
+        """
+        Inicializa um Fighter usando o novo sistema de personagens.
+        
+        Args:
+            player (int): Número do jogador (1 ou 2)
+            x (int): Posição X inicial
+            y (int): Posição Y inicial
+            flip (bool): Se a personagem deve ser virada horizontalmente
+            character_name (str): Nome da personagem do dicionário CHARACTERS
+            sound (pygame.mixer.Sound): Som de ataque
+        """
         self.player = player
-        self.size = data[0]
-        self.image_scale = data[1]
-        self.offset = data[2]
         self.flip = flip
-        self.animation_list = self.load_images(sprite_sheet, animation_steps)
-        self.action = 0  # 0:idle #!:run #3:attack1 #4: attack2 #5hit #6:death
+        self.attack_sound = sound
+        
+        # Carregar dados da personagem
+        if character_name not in CHARACTERS:
+            raise ValueError(f"Personagem '{character_name}' não encontrada em CHARACTERS")
+        
+        self.character_data = CHARACTERS[character_name]
+        self.character_name = character_name
+        self.scale = self.character_data["scale"]
+        
+        # Carregar animações
+        self.animation_list = self.load_character_animations()
+        
+        # Estado da animação
+        self.action = 0  # 0:idle #1:run #2:jump #3:attack1 #4:attack2 #5:hit #6:death
         self.frame_index = 0
         self.image = self.animation_list[self.action][self.frame_index]
         self.update_time = pygame.time.get_ticks()
-        self.rect = pygame.Rect((x, y,  80, 180))
+        
+        # Propriedades físicas
+        self.rect = pygame.Rect((x, y, 80, 180))
         self.vel_y = 0
         self.running = False
         self.jump = False
+        
+        # Propriedades de combate
         self.attack_type = 0
         self.attacking = False
         self.attack_cd = 0
-        self.attack_sound = sound
         self.hit = False
         self.health = 100
         self.alive = True
+        
+        # Offset para desenhar (ajustar conforme necessário)
+        self.offset = (50, 50)
 
-    def load_images(self, sprite_sheet, animation_steps):
-        # EXTRACT IMAGES FROM SPRITESHEET
+    def load_character_animations(self):
+        """
+        Carrega todas as animações da personagem usando o novo sistema.
+        Retorna uma lista de listas de frames compatível com o sistema antigo.
+        """
+        animations = self.character_data["animations"]
         animation_list = []
-        for y, animation in enumerate(animation_steps):
-            temp_img_list = []
-            for x in range(animation):
-                temp_img = sprite_sheet.subsurface(
-                    x * self.size, y * self.size, self.size, self.size)
-                temp_img_list.append(pygame.transform.scale(
-                    temp_img, (self.size * self.image_scale, self.size * self.image_scale)))
-            animation_list.append(temp_img_list)
+        
+        # Mapeamento de ações para nomes de animações
+        # Índice: [idle, run, jump, attack1, attack2, hit, death]
+        action_map = {
+            0: "idle",
+            1: "run", 
+            2: "jump",      # Pode não existir em todas as personagens
+            3: "attack1",   # ou "attack" se não houver attack1
+            4: "attack2",   # Pode não existir
+            5: "hit",
+            6: "death"
+        }
+        
+        for action_index in range(7):
+            action_name = action_map[action_index]
+            
+            # Tentar encontrar a animação apropriada
+            if action_name in animations:
+                anim_path, frame_count = animations[action_name]
+                frames = self.load_animation_from_spritesheet(anim_path, frame_count)
+                animation_list.append(frames)
+            elif action_name == "attack1" and "attack" in animations:
+                # Fallback: se não há attack1, usa attack
+                anim_path, frame_count = animations["attack"]
+                frames = self.load_animation_from_spritesheet(anim_path, frame_count)
+                animation_list.append(frames)
+            elif action_name == "attack2" and "attack1" in animations:
+                # Fallback: se não há attack2, usa attack1
+                anim_path, frame_count = animations["attack1"]
+                frames = self.load_animation_from_spritesheet(anim_path, frame_count)
+                animation_list.append(frames)
+            elif action_name == "attack2" and "attack" in animations:
+                # Fallback: se não há attack2 nem attack1, usa attack
+                anim_path, frame_count = animations["attack"]
+                frames = self.load_animation_from_spritesheet(anim_path, frame_count)
+                animation_list.append(frames)
+            elif action_name == "jump":
+                # Se não há jump, usa idle como fallback
+                anim_path, frame_count = animations["idle"]
+                frames = self.load_animation_from_spritesheet(anim_path, frame_count)
+                animation_list.append(frames)
+            else:
+                # Fallback genérico: usar idle
+                anim_path, frame_count = animations["idle"]
+                frames = self.load_animation_from_spritesheet(anim_path, frame_count)
+                animation_list.append(frames)
+        
         return animation_list
+
+    def load_animation_from_spritesheet(self, anim_path, frame_count):
+        """
+        Carrega uma animação usando a função load_animation do animation_loader.
+        
+        Args:
+            anim_path (str): Caminho completo para o ficheiro de spritesheet
+            frame_count (int): Número de frames na animação (não usado aqui, 
+                              load_animation calcula automaticamente)
+            
+        Returns:
+            list: Lista de superfícies pygame (frames)
+        """
+        import os
+        
+        try:
+            # Separar o path e o filename
+            directory = os.path.dirname(anim_path)
+            filename = os.path.basename(anim_path)
+            
+            # Usar a função load_animation que já existe!
+            frames = load_animation(directory, filename, self.scale)
+            return frames
+            
+        except Exception as e:
+            print(f"Erro ao carregar {anim_path}: {e}")
+            # Retorna uma superfície em branco como fallback
+            fallback = pygame.Surface((100, 100))
+            fallback.fill((255, 0, 255))  # Magenta para indicar erro
+            return [fallback]
 
     def move(self, screen_width, screen_height, surface, target, round_over):
         SPEED = 10
@@ -51,7 +153,7 @@ class Fighter():
 
         # CAN ONLY PERFORM OTHER ACTIONS IF NOT ATTACKING
         if self.attacking == False and self.alive == True and round_over == False:
-            #CHECK PLAYER 1 CONTROLS
+            # CHECK PLAYER 1 CONTROLS
             if self.player == 1:
                 # movement
                 if key[pygame.K_a]:
@@ -74,7 +176,7 @@ class Fighter():
                         self.attack_type = 1
                     if key[pygame.K_t]:
                         self.attack_type = 2
-            #CHECK PLAYER 2 CONTROLS
+            # CHECK PLAYER 2 CONTROLS
             if self.player == 2:
                 # movement
                 if key[pygame.K_LEFT]:
@@ -126,10 +228,9 @@ class Fighter():
         self.rect.x += dx
         self.rect.y += dy
 
-    # HANDLE ANIMATION UPDATES
-
     def update(self):
-
+        """Atualiza a animação e estado do fighter"""
+        
         # CHECK WHAT ACTION THE PLAYER IS DOING
         if self.health <= 0:
             self.health = 0
@@ -176,16 +277,21 @@ class Fighter():
 
     def attack(self, target):
         if self.attack_cd == 0:
-            #EXECUTE ATTACK
+            # EXECUTE ATTACK
             self.attacking = True
             self.attack_sound.play()
-            attacking_rect = pygame.Rect(self.rect.centerx - (
-                2 * self.rect.width * self.flip), self.rect.y, 2 * self.rect.width, self.   rect.height)
+            attacking_rect = pygame.Rect(
+                self.rect.centerx - (2 * self.rect.width * self.flip), 
+                self.rect.y, 
+                2 * self.rect.width, 
+                self.rect.height
+            )
             if attacking_rect.colliderect(target.rect):
                 target.health -= 10
                 target.hit = True
 
     def update_action(self, new_action):
+        """Atualiza a ação atual do fighter"""
         # CHECK IF NEW ACTION IS DIFFERENT THAN PREV ONE
         if new_action != self.action:
             self.action = new_action
@@ -194,5 +300,9 @@ class Fighter():
             self.update_time = pygame.time.get_ticks()
 
     def draw_fighter(self, surface):
+        """Desenha o fighter na superfície"""
         img = pygame.transform.flip(self.image, self.flip, False)
-        surface.blit(img, (self.rect.x - (self.offset[0] * self.image_scale), self.rect.y - self.offset[1] * self.image_scale))
+        # Calcular offset baseado no tamanho da imagem
+        draw_x = self.rect.x - (self.offset[0])
+        draw_y = self.rect.y - (self.offset[1])
+        surface.blit(img, (draw_x, draw_y))

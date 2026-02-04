@@ -13,6 +13,10 @@ class MenuFrame:
         self.title_font = pygame.font.Font("multimedia/fonts/Turok.ttf", 74)
         self.option_font = pygame.font.Font("multimedia/fonts/Turok.ttf", 50)
 
+        # Load background image
+        self.bg_image = pygame.image.load(
+            "multimedia/images/background/menu_background.jpg").convert_alpha()
+
     def handle_events(self, events):
         for event in events:
             if event.type == pygame.KEYDOWN:
@@ -24,7 +28,7 @@ class MenuFrame:
                         self.selected_option + 1) % len(self.options)
                 if event.key == pygame.K_RETURN:
                     if self.selected_option == 0:
-                        return "character_selection"
+                        return {"next":"character_select"}
                     elif self.selected_option == 1:
                         pygame.quit()
                         exit()
@@ -34,7 +38,11 @@ class MenuFrame:
         pass
 
     def draw(self, screen):
-        screen.fill((0, 0, 0))
+
+        # Background Image
+        bg = pygame.transform.scale(
+            self.bg_image, (self.screen_width, self.screen_height))
+        screen.blit(bg, (0, 0))
 
         # Title
         title_surface = self.title_font.render(
