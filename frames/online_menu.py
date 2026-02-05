@@ -92,7 +92,7 @@ class OnlineMenuFrame:
             if self.client and self.client.has_messages():
                 msg = self.client.get_message()
                 
-                if msg.type.value == "BOTH_READY":
+                if msg.msg_type.value == "BOTH_READY":
                     # Ambos jogadores selecionaram personagens!
                     # Transitar para character select online
                     return {
