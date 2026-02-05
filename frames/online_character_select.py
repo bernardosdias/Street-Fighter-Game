@@ -163,15 +163,39 @@ class OnlineCharacterSelectFrame:
         
         # Desenhar preview da personagem selecionada
         character = self.characters[self.selected_option]
+        
         sheet = character["image"]
         size = character["size"]
         scale = character["scale"]
+        offset_x, offset_y = character.get("offset", [0, 0])
         
-        frame = sheet.subsurface(self.anim_index * size, 0, size, size)
+        sheet_width = sheet.get_width()
+        sheet_height = sheet.get_height()
+        frame_count = character["idle_frames"]
+        
+        # Calcular largura do frame (não assumir quadrado!)
+        frame_width = sheet_width // frame_count
+        frame_height = sheet_height
+        
+        frame_x = self.anim_index * frame_width
+        
+        # Garantir que não excede os limites
+        if frame_x + frame_width > sheet_width:
+            self.anim_index = 0
+            frame_x = 0
+        
+        # Extrair o frame atual
+        frame = sheet.subsurface(frame_x, 0, frame_width, frame_height)
+        
+        # Escalar o frame
         preview_image = pygame.transform.scale(
-            frame, (int(size * scale), int(size * scale)))
+            frame, (int(frame_width * scale), int(frame_height * scale)))
         
-        screen.blit(preview_image, (self.screen_width // 2 - preview_image.get_width() // 2, 150))
+        # Centralizar na tela (com offset)
+        preview_x = self.screen_width // 2 - preview_image.get_width() // 2 + offset_x
+        preview_y = 300 - preview_image.get_height() // 2 + offset_y
+        
+        screen.blit(preview_image, (preview_x, preview_y))
         
         # Nome da personagem selecionada
         name_surface = self.title_font.render(character["name"], True, (255, 255, 0))
