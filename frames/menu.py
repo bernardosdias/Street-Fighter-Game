@@ -6,7 +6,7 @@ class MenuFrame:
         self.screen_width = screen_width
         self.screen_height = screen_height
 
-        self.options = ["Start Game", "Exit"]
+        self.options = ["Single Player", "Online Multiplayer", "Exit"]  # ← ADICIONADA OPÇÃO
         self.selected_option = 0
 
         # FONTS
@@ -28,8 +28,13 @@ class MenuFrame:
                         self.selected_option + 1) % len(self.options)
                 if event.key == pygame.K_RETURN:
                     if self.selected_option == 0:
+                        # Single Player
                         return {"next":"character_select"}
                     elif self.selected_option == 1:
+                        # Online Multiplayer ← NOVO
+                        return {"next":"online_menu"}
+                    elif self.selected_option == 2:
+                        # Exit
                         pygame.quit()
                         exit()
         return None

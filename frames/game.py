@@ -58,15 +58,17 @@ class GameFrame:
         Carrega e retorna o som específico da personagem.
         """
         if character_name not in CHARACTERS:
-            print(f"⚠️ Personagem '{character_name}' não encontrada, usando som padrão")
+            print(
+                f"⚠️ Personagem '{character_name}' não encontrada, usando som padrão")
             return self.default_sound
-        
+
         # Obter o nome do ficheiro de som do dicionário CHARACTERS
-        sound_file = CHARACTERS[character_name].get("attack_sound", "sword.wav")
-        
+        sound_file = CHARACTERS[character_name].get(
+            "attack_sound", "sword.wav")
+
         # Construir o caminho completo
         sound_path = os.path.join("multimedia/audio", sound_file)
-        
+
         # Tentar carregar o som
         try:
             sound = pygame.mixer.Sound(sound_path)
@@ -86,7 +88,8 @@ class GameFrame:
 
         # Carregar som padrão (fallback)
         try:
-            self.default_sound = pygame.mixer.Sound("multimedia/audio/sword.wav")
+            self.default_sound = pygame.mixer.Sound(
+                "multimedia/audio/sword.wav")
             self.default_sound.set_volume(0.2)
         except:
             # Se nem o sword.wav existir, criar um som silencioso
