@@ -69,13 +69,13 @@ class OnlineCharacterSelectFrame:
         while self.client.has_messages():
             msg = self.client.get_message()
             
-            if msg.type == MessageType.CHARACTER_SELECTED:
+            if msg.msg_type == MessageType.CHARACTER_SELECTED:
                 # Oponente selecionou personagem
                 opponent_char = msg.data.get("character")
                 print(f"🎭 Oponente selecionou: {opponent_char}")
                 self.opponent_character = opponent_char
             
-            elif msg.type == MessageType.BOTH_READY:
+            elif msg.msg_type == MessageType.BOTH_READY:
                 # Ambos prontos, iniciar jogo!
                 p1_char = msg.data.get("player1_character")
                 p2_char = msg.data.get("player2_character")

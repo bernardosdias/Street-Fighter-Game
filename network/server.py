@@ -176,7 +176,7 @@ class GameServer:
                 message.data["player_id"] = player_id
                 self._send_to_player(other_player_id, message)
         
-        elif message.msg_type == MessageType.PLAYER_STATE:
+        elif message.msg_type == MessageType.PLAYER_STATE_UPDATE:
             # Estado do jogador - repassar para o outro jogador
             other_player_id = 2 if player_id == 1 else 1
             if other_player_id in self.players:

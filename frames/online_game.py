@@ -115,13 +115,13 @@ class OnlineGameFrame:
         while self.client.has_messages():
             msg = self.client.get_message()
             
-            if msg.type == MessageType.PLAYER_STATE_UPDATE  :
+            if msg.msg_type == MessageType.PLAYER_STATE_UPDATE  :
                 # Receber estado do oponente
                 opponent_id = msg.data.get("player_id")
                 if opponent_id != self.player_id:
                     self._apply_opponent_state(msg.data.get("state"))
             
-            elif msg.type == MessageType.DISCONNECT:
+            elif msg.msg_type == MessageType.DISCONNECT:
                 # Oponente desconectou
                 print("⚠️ Oponente desconectou!")
                 return "menu"

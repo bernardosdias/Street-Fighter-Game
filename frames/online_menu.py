@@ -2,6 +2,7 @@ import pygame
 import threading
 from network.server import GameServer
 from network.client import GameClient
+from network.protocol import MessageType
 
 
 class OnlineMenuFrame:
@@ -18,6 +19,7 @@ class OnlineMenuFrame:
         self.state = "MENU"  # MENU, HOSTING, JOINING, INPUT_IP, WAITING
         self.message = ""
         self.error_message = ""
+        self.is_host = False  # ← ADICIONAR
         
         # Network
         self.server = None
@@ -87,26 +89,54 @@ class OnlineMenuFrame:
                         self._cleanup()
                         return {"next": "menu"}
         
-        # Verificar se ambos jogadores conectaram (quando em HOSTING ou JOINING)
-        if self.state in ["HOSTING", "JOINING", "WAITING"]:
-            if self.client and self.client.has_messages():
-                msg = self.client.get_message()
-                
-                if msg.msg_type.value == "BOTH_READY":
-                    # Ambos jogadores selecionaram personagens!
-                    # Transitar para character select online
+        # Verificar se deve transitar para character select
+        if self.state == "WAITING" and self.client:
+            # Se é host, verificar se 2 jogadores conectaram no servidor
+            if self.is_host and self.server:
+                if self.server.player_count >= 2:
+                    print("🎉 Ambos jogadores conectados!")
+                    # Dar um pouco de tempo para garantir que a conexão está estável
                     return {
                         "next": "online_character_select",
                         "client": self.client,
                         "player_id": self.client.player_id,
-                        "is_host": (self.state == "HOSTING")
+                        "is_host": True
                     }
+            
+            # Se NÃO é host (é cliente), transitar automaticamente após conectar
+            # O cliente já está conectado se chegou aqui (passou no _join_game)
+            elif not self.is_host:
+                # Cliente conectou, pode ir direto para character select
+                # Mas primeiro verificar se há alguma mensagem importante
+                has_important_msg = False
+                if self.client.has_messages():
+                    msg = self.client.get_message()
+                    # Se for disconnect, não transitar
+                    if msg and msg.type == MessageType.DISCONNECT:
+                        has_important_msg = True
+                        self._cleanup()
+                        return {"next": "menu"}
+                
+                # Se passou 1 segundo desde que conectou, ir para character select
+                if not has_important_msg and not hasattr(self, '_connect_time'):
+                    self._connect_time = pygame.time.get_ticks()
+                
+                if hasattr(self, '_connect_time'):
+                    if pygame.time.get_ticks() - self._connect_time > 1000:
+                        print("🎉 Pronto para selecionar personagem!")
+                        return {
+                            "next": "online_character_select",
+                            "client": self.client,
+                            "player_id": self.client.player_id,
+                            "is_host": False
+                        }
         
         return None
     
     def _host_game(self):
         """Inicia servidor e conecta como host"""
         self.state = "HOSTING"
+        self.is_host = True  # ← ADICIONAR
         self.message = "Iniciando servidor..."
         self.error_message = ""
         
