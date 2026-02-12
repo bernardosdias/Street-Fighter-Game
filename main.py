@@ -1,27 +1,17 @@
 import pygame
-from fighters.fighter import Fighter
-from pygame import mixer
 from frames.menu import MenuFrame
 from frames.game import GameFrame
 from frames.character_select import CharacterSelectFrame
 from frames.online_menu import OnlineMenuFrame
 from frames.online_character_select import OnlineCharacterSelectFrame
 from frames.online_game import OnlineGameFrame
+from core.config import SCREEN_WIDTH, SCREEN_HEIGHT, FPS, WINDOW_TITLE
 
-# mixer.init()
 pygame.init()
-
-# CREATE GAME WINDOW
-
-SCREEN_WIDTH = 1000
-SCREEN_HEIGHT = 600
-
-# SET FRAME RATE
-FPS = 60
 
 clock = pygame.time.Clock()
 screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
-pygame.display.set_caption("Street Fighter - Online")
+pygame.display.set_caption(WINDOW_TITLE)
 
 # CREATE MENU FRAME
 current_frame = MenuFrame(SCREEN_WIDTH, SCREEN_HEIGHT)

@@ -74,7 +74,12 @@ class NetworkProtocol:
     @staticmethod
     def decode_message(data):
         messages = []
-        lines = data.encode('utf-8').split('\n')
+        if isinstance(data, bytes):
+            text = data.decode('utf-8')
+        else:
+            text = str(data)
+
+        lines = text.split('\n')
 
         for line in lines:
             if line.strip():
@@ -110,7 +115,11 @@ def create_attack_message(attacker_id, attack_type):
 
 
 def create_hit_message(attacker_id, victim_id, damage):
-    return Message(MessageType.HIT, {"attacker_id": attacker_id, "victim_id": victim_id, "damage": damage})
+    return Message(MessageType.HIT, {
+        "attacker_id": attacker_id,
+        "victim_id": victim_id,
+        "damage": damage
+    })
 
 
 def create_round_over_message(winner_id):

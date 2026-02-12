@@ -1,7 +1,6 @@
 import pygame
 from characters.characters import CHARACTERS
 from fighters.animation_loader import load_animation
-import os
 
 
 class Fighter():
@@ -58,6 +57,7 @@ class Fighter():
         self.vel_y = 0
         self.running = False
         self.jump = False
+        self.defending = False
 
         # Propriedades de combate
         self.attack_type = 0
@@ -145,7 +145,8 @@ class Fighter():
             directory = self.character_data["path"]
 
             # Usar a função load_animation que já existe!
-            frames = load_animation(directory, anim_filename, self.scale)
+            frames = load_animation(
+                directory, anim_filename, self.scale, frame_count)
             return frames
 
         except Exception as e:
@@ -155,12 +156,15 @@ class Fighter():
             fallback.fill((255, 0, 255))  # Magenta para indicar erro
             return [fallback]
 
-    def move(self, screen_width, screen_height, surface, target, round_over):
+    def move(self, screen_width, screen_height, surface, target, round_over, apply_damage=True, controls=None):
         SPEED = 10
         GRAVITY = 2
         dx = 0
         dy = 0
+        moving_left_input = False
+        moving_right_input = False
         self.running = False
+        self.defending = False
         self.attack_type = 0
 
         # get keypresses
@@ -168,52 +172,77 @@ class Fighter():
 
         # CAN ONLY PERFORM OTHER ACTIONS IF NOT ATTACKING
         if self.attacking == False and self.alive == True and round_over == False:
-            # CHECK PLAYER 1 CONTROLS
-            if self.player == 1:
-                # movement
-                if key[pygame.K_a]:
+            if controls is not None:
+                if controls.get("left"):
+                    moving_left_input = True
                     dx = -SPEED
                     self.running = True
-                if key[pygame.K_d]:
+                if controls.get("right"):
+                    moving_right_input = True
                     dx = SPEED
                     self.running = True
 
-                # vertical movement
-                if key[pygame.K_w] and self.jump == False:
+                if controls.get("jump") and self.jump == False:
                     self.vel_y = -30
                     self.jump = True
-                # ATTACK PRESSES
-                if key[pygame.K_r] or key[pygame.K_t]:
-                    self.attack(target)
 
-                    # determine attack type
-                    if key[pygame.K_r]:
+                if controls.get("attack1") or controls.get("attack2"):
+                    self.attack(target, apply_damage=apply_damage)
+                    if controls.get("attack1"):
                         self.attack_type = 1
-                    if key[pygame.K_t]:
+                    if controls.get("attack2"):
                         self.attack_type = 2
-            # CHECK PLAYER 2 CONTROLS
-            if self.player == 2:
-                # movement
-                if key[pygame.K_LEFT]:
-                    dx = -SPEED
-                    self.running = True
-                if key[pygame.K_RIGHT]:
-                    dx = SPEED
-                    self.running = True
+            else:
+                # CHECK PLAYER 1 CONTROLS
+                if self.player == 1:
+                    # movement
+                    if key[pygame.K_a]:
+                        moving_left_input = True
+                        dx = -SPEED
+                        self.running = True
+                    if key[pygame.K_d]:
+                        moving_right_input = True
+                        dx = SPEED
+                        self.running = True
 
-                # vertical movement
-                if key[pygame.K_UP] and self.jump == False:
-                    self.vel_y = -30
-                    self.jump = True
-                # ATTACK PRESSES
-                if key[pygame.K_KP1] or key[pygame.K_KP2]:
-                    self.attack(target)
+                    # vertical movement
+                    if key[pygame.K_w] and self.jump == False:
+                        self.vel_y = -30
+                        self.jump = True
+                    # ATTACK PRESSES
+                    if key[pygame.K_r] or key[pygame.K_t]:
+                        self.attack(target, apply_damage=apply_damage)
 
-                    # determine attack type
-                    if key[pygame.K_KP1]:
-                        self.attack_type = 1
-                    if key[pygame.K_KP2]:
-                        self.attack_type = 2
+                        # determine attack type
+                        if key[pygame.K_r]:
+                            self.attack_type = 1
+                        if key[pygame.K_t]:
+                            self.attack_type = 2
+                # CHECK PLAYER 2 CONTROLS
+                if self.player == 2:
+                    # movement
+                    if key[pygame.K_LEFT]:
+                        moving_left_input = True
+                        dx = -SPEED
+                        self.running = True
+                    if key[pygame.K_RIGHT]:
+                        moving_right_input = True
+                        dx = SPEED
+                        self.running = True
+
+                    # vertical movement
+                    if key[pygame.K_UP] and self.jump == False:
+                        self.vel_y = -30
+                        self.jump = True
+                    # ATTACK PRESSES
+                    if key[pygame.K_KP1] or key[pygame.K_KP2]:
+                        self.attack(target, apply_damage=apply_damage)
+
+                        # determine attack type
+                        if key[pygame.K_KP1]:
+                            self.attack_type = 1
+                        if key[pygame.K_KP2]:
+                            self.attack_type = 2
         # APPLY GRAVITY
         self.vel_y += GRAVITY
         dy += self.vel_y
@@ -233,6 +262,12 @@ class Fighter():
             self.flip = False
         else:
             self.flip = True
+
+        # Defend while pressing backwards (relative to current facing direction)
+        back_input = (self.flip and moving_right_input) or (
+            (not self.flip) and moving_left_input
+        )
+        self.defending = back_input and self.alive and (not round_over)
 
         # APPLY ATTACK CD
         if self.attack_cd > 0:
@@ -289,7 +324,7 @@ class Fighter():
                     self.attacking = False
                     self.attack_cd = 20
 
-    def attack(self, target):
+    def attack(self, target, apply_damage=True):
         if self.attack_cd == 0:
             # EXECUTE ATTACK
             self.attacking = True
@@ -305,7 +340,9 @@ class Fighter():
                 attack_range * self.rect.width,
                 self.rect.height
             )
-            if attacking_rect.colliderect(target.rect):
+            if apply_damage and attacking_rect.colliderect(target.rect):
+                if target.defending:
+                    return
                 target.health -= 10
                 target.hit = True
 

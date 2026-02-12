@@ -1,4 +1,5 @@
 import pygame
+from core.assets import font_path, image_path
 
 
 class MenuFrame:
@@ -10,12 +11,12 @@ class MenuFrame:
         self.selected_option = 0
 
         # FONTS
-        self.title_font = pygame.font.Font("multimedia/fonts/Turok.ttf", 74)
-        self.option_font = pygame.font.Font("multimedia/fonts/Turok.ttf", 50)
+        self.title_font = pygame.font.Font(font_path(), 74)
+        self.option_font = pygame.font.Font(font_path(), 50)
 
         # Load background image
         self.bg_image = pygame.image.load(
-            "multimedia/images/background/menu_background.jpg").convert_alpha()
+            image_path("background", "menu_background.jpg")).convert_alpha()
 
     def handle_events(self, events):
         for event in events:

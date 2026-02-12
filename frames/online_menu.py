@@ -3,6 +3,7 @@ import threading
 from network.server import GameServer
 from network.client import GameClient
 from network.protocol import MessageType
+from core.assets import font_path, image_path
 
 
 class OnlineMenuFrame:
@@ -31,14 +32,14 @@ class OnlineMenuFrame:
         self.input_active = False
 
         # Fonts
-        self.title_font = pygame.font.Font("multimedia/fonts/Turok.ttf", 60)
-        self.option_font = pygame.font.Font("multimedia/fonts/Turok.ttf", 40)
-        self.message_font = pygame.font.Font("multimedia/fonts/Turok.ttf", 25)
+        self.title_font = pygame.font.Font(font_path(), 60)
+        self.option_font = pygame.font.Font(font_path(), 40)
+        self.message_font = pygame.font.Font(font_path(), 25)
 
         # Background
         try:
             self.bg_image = pygame.image.load(
-                "multimedia/images/background/menu_background.jpg").convert_alpha()
+                image_path("background", "menu_background.jpg")).convert_alpha()
         except:
             self.bg_image = None
 
@@ -114,7 +115,7 @@ class OnlineMenuFrame:
                 if self.client.has_messages():
                     msg = self.client.get_message()
                     # Se for disconnect, não transitar
-                    if msg and msg.type == MessageType.DISCONNECT:
+                    if msg and msg.msg_type == MessageType.DISCONNECT:
                         has_important_msg = True
                         self._cleanup()
                         return {"next": "menu"}
@@ -155,7 +156,7 @@ class OnlineMenuFrame:
             # Conectar como cliente ao próprio servidor
             self.client = GameClient()
             if self.client.connect("127.0.0.1"):
-                local_ip = "100.125.253.127"  # self.server.get_local_ip()
+                local_ip = self.server.get_local_ip()
                 self.message = f"Servidor iniciado!"
                 self.state = "WAITING"
                 self.error_message = f"Partilha este IP: {local_ip}"

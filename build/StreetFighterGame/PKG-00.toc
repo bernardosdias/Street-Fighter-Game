@@ -1,0 +1,55 @@
+('C:\\Users\\Bernardo '
+ 'Dias\\Documents\\GitHub\\Street-Fighter-Game\\build\\StreetFighterGame\\StreetFighterGame.pkg',
+ {'BINARY': True,
+  'DATA': True,
+  'EXECUTABLE': True,
+  'EXTENSION': True,
+  'PYMODULE': True,
+  'PYSOURCE': True,
+  'PYZ': False,
+  'SPLASH': True,
+  'SYMLINK': False},
+ [('pyi-contents-directory _internal', '', 'OPTION'),
+  ('PYZ-00.pyz',
+   'C:\\Users\\Bernardo '
+   'Dias\\Documents\\GitHub\\Street-Fighter-Game\\build\\StreetFighterGame\\PYZ-00.pyz',
+   'PYZ'),
+  ('struct',
+   'C:\\Users\\Bernardo '
+   'Dias\\Documents\\GitHub\\Street-Fighter-Game\\build\\StreetFighterGame\\localpycs\\struct.pyc',
+   'PYMODULE'),
+  ('pyimod01_archive',
+   'C:\\Users\\Bernardo '
+   'Dias\\Documents\\GitHub\\Street-Fighter-Game\\build\\StreetFighterGame\\localpycs\\pyimod01_archive.pyc',
+   'PYMODULE'),
+  ('pyimod02_importers',
+   'C:\\Users\\Bernardo '
+   'Dias\\Documents\\GitHub\\Street-Fighter-Game\\build\\StreetFighterGame\\localpycs\\pyimod02_importers.pyc',
+   'PYMODULE'),
+  ('pyimod03_ctypes',
+   'C:\\Users\\Bernardo '
+   'Dias\\Documents\\GitHub\\Street-Fighter-Game\\build\\StreetFighterGame\\localpycs\\pyimod03_ctypes.pyc',
+   'PYMODULE'),
+  ('pyimod04_pywin32',
+   'C:\\Users\\Bernardo '
+   'Dias\\Documents\\GitHub\\Street-Fighter-Game\\build\\StreetFighterGame\\localpycs\\pyimod04_pywin32.pyc',
+   'PYMODULE'),
+  ('pyiboot01_bootstrap',
+   'C:\\Users\\Bernardo '
+   'Dias\\Documents\\GitHub\\Street-Fighter-Game\\.venv\\Lib\\site-packages\\PyInstaller\\loader\\pyiboot01_bootstrap.py',
+   'PYSOURCE'),
+  ('pyi_rth_inspect',
+   'C:\\Users\\Bernardo '
+   'Dias\\Documents\\GitHub\\Street-Fighter-Game\\.venv\\Lib\\site-packages\\PyInstaller\\hooks\\rthooks\\pyi_rth_inspect.py',
+   'PYSOURCE'),
+  ('main',
+   'C:\\Users\\Bernardo Dias\\Documents\\GitHub\\Street-Fighter-Game\\main.py',
+   'PYSOURCE')],
+ 'python314.dll',
+ True,
+ False,
+ False,
+ [],
+ None,
+ None,
+ None)

@@ -1,0 +1,678 @@
+('C:\\Users\\Bernardo '
+ 'Dias\\Documents\\GitHub\\Street-Fighter-Game\\build\\StreetFighterGame\\PYZ-00.pyz',
+ [('__future__',
+   'C:\\Users\\Bernardo '
+   'Dias\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\__future__.py',
+   'PYMODULE'),
+  ('_aix_support',
+   'C:\\Users\\Bernardo '
+   'Dias\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\_aix_support.py',
+   'PYMODULE'),
+  ('_ast_unparse',
+   'C:\\Users\\Bernardo '
+   'Dias\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\_ast_unparse.py',
+   'PYMODULE'),
+  ('_colorize',
+   'C:\\Users\\Bernardo '
+   'Dias\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\_colorize.py',
+   'PYMODULE'),
+  ('_compat_pickle',
+   'C:\\Users\\Bernardo '
+   'Dias\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\_compat_pickle.py',
+   'PYMODULE'),
+  ('_opcode_metadata',
+   'C:\\Users\\Bernardo '
+   'Dias\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\_opcode_metadata.py',
+   'PYMODULE'),
+  ('_py_abc',
+   'C:\\Users\\Bernardo '
+   'Dias\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\_py_abc.py',
+   'PYMODULE'),
+  ('_py_warnings',
+   'C:\\Users\\Bernardo '
+   'Dias\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\_py_warnings.py',
+   'PYMODULE'),
+  ('_pydatetime',
+   'C:\\Users\\Bernardo '
+   'Dias\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\_pydatetime.py',
+   'PYMODULE'),
+  ('_pydecimal',
+   'C:\\Users\\Bernardo '
+   'Dias\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\_pydecimal.py',
+   'PYMODULE'),
+  ('_strptime',
+   'C:\\Users\\Bernardo '
+   'Dias\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\_strptime.py',
+   'PYMODULE'),
+  ('_threading_local',
+   'C:\\Users\\Bernardo '
+   'Dias\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\_threading_local.py',
+   'PYMODULE'),
+  ('annotationlib',
+   'C:\\Users\\Bernardo '
+   'Dias\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\annotationlib.py',
+   'PYMODULE'),
+  ('argparse',
+   'C:\\Users\\Bernardo '
+   'Dias\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\argparse.py',
+   'PYMODULE'),
+  ('ast',
+   'C:\\Users\\Bernardo '
+   'Dias\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\ast.py',
+   'PYMODULE'),
+  ('base64',
+   'C:\\Users\\Bernardo '
+   'Dias\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\base64.py',
+   'PYMODULE'),
+  ('bisect',
+   'C:\\Users\\Bernardo '
+   'Dias\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\bisect.py',
+   'PYMODULE'),
+  ('bz2',
+   'C:\\Users\\Bernardo '
+   'Dias\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\bz2.py',
+   'PYMODULE'),
+  ('calendar',
+   'C:\\Users\\Bernardo '
+   'Dias\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\calendar.py',
+   'PYMODULE'),
+  ('characters', '-', 'PYMODULE'),
+  ('characters.characters',
+   'C:\\Users\\Bernardo '
+   'Dias\\Documents\\GitHub\\Street-Fighter-Game\\characters\\characters.py',
+   'PYMODULE'),
+  ('codeop',
+   'C:\\Users\\Bernardo '
+   'Dias\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\codeop.py',
+   'PYMODULE'),
+  ('compression',
+   'C:\\Users\\Bernardo '
+   'Dias\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\compression\\__init__.py',
+   'PYMODULE'),
+  ('compression._common',
+   'C:\\Users\\Bernardo '
+   'Dias\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\compression\\_common\\__init__.py',
+   'PYMODULE'),
+  ('compression._common._streams',
+   'C:\\Users\\Bernardo '
+   'Dias\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\compression\\_common\\_streams.py',
+   'PYMODULE'),
+  ('compression.zstd',
+   'C:\\Users\\Bernardo '
+   'Dias\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\compression\\zstd\\__init__.py',
+   'PYMODULE'),
+  ('compression.zstd._zstdfile',
+   'C:\\Users\\Bernardo '
+   'Dias\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\compression\\zstd\\_zstdfile.py',
+   'PYMODULE'),
+  ('contextlib',
+   'C:\\Users\\Bernardo '
+   'Dias\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\contextlib.py',
+   'PYMODULE'),
+  ('contextvars',
+   'C:\\Users\\Bernardo '
+   'Dias\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\contextvars.py',
+   'PYMODULE'),
+  ('copy',
+   'C:\\Users\\Bernardo '
+   'Dias\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\copy.py',
+   'PYMODULE'),
+  ('core',
+   'C:\\Users\\Bernardo '
+   'Dias\\Documents\\GitHub\\Street-Fighter-Game\\core\\__init__.py',
+   'PYMODULE'),
+  ('core.assets',
+   'C:\\Users\\Bernardo '
+   'Dias\\Documents\\GitHub\\Street-Fighter-Game\\core\\assets.py',
+   'PYMODULE'),
+  ('core.config',
+   'C:\\Users\\Bernardo '
+   'Dias\\Documents\\GitHub\\Street-Fighter-Game\\core\\config.py',
+   'PYMODULE'),
+  ('csv',
+   'C:\\Users\\Bernardo '
+   'Dias\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\csv.py',
+   'PYMODULE'),
+  ('ctypes',
+   'C:\\Users\\Bernardo '
+   'Dias\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\ctypes\\__init__.py',
+   'PYMODULE'),
+  ('ctypes._endian',
+   'C:\\Users\\Bernardo '
+   'Dias\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\ctypes\\_endian.py',
+   'PYMODULE'),
+  ('ctypes._layout',
+   'C:\\Users\\Bernardo '
+   'Dias\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\ctypes\\_layout.py',
+   'PYMODULE'),
+  ('dataclasses',
+   'C:\\Users\\Bernardo '
+   'Dias\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\dataclasses.py',
+   'PYMODULE'),
+  ('datetime',
+   'C:\\Users\\Bernardo '
+   'Dias\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\datetime.py',
+   'PYMODULE'),
+  ('decimal',
+   'C:\\Users\\Bernardo '
+   'Dias\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\decimal.py',
+   'PYMODULE'),
+  ('difflib',
+   'C:\\Users\\Bernardo '
+   'Dias\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\difflib.py',
+   'PYMODULE'),
+  ('dis',
+   'C:\\Users\\Bernardo '
+   'Dias\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\dis.py',
+   'PYMODULE'),
+  ('email',
+   'C:\\Users\\Bernardo '
+   'Dias\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\email\\__init__.py',
+   'PYMODULE'),
+  ('email._encoded_words',
+   'C:\\Users\\Bernardo '
+   'Dias\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\email\\_encoded_words.py',
+   'PYMODULE'),
+  ('email._header_value_parser',
+   'C:\\Users\\Bernardo '
+   'Dias\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\email\\_header_value_parser.py',
+   'PYMODULE'),
+  ('email._parseaddr',
+   'C:\\Users\\Bernardo '
+   'Dias\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\email\\_parseaddr.py',
+   'PYMODULE'),
+  ('email._policybase',
+   'C:\\Users\\Bernardo '
+   'Dias\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\email\\_policybase.py',
+   'PYMODULE'),
+  ('email.base64mime',
+   'C:\\Users\\Bernardo '
+   'Dias\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\email\\base64mime.py',
+   'PYMODULE'),
+  ('email.charset',
+   'C:\\Users\\Bernardo '
+   'Dias\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\email\\charset.py',
+   'PYMODULE'),
+  ('email.contentmanager',
+   'C:\\Users\\Bernardo '
+   'Dias\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\email\\contentmanager.py',
+   'PYMODULE'),
+  ('email.encoders',
+   'C:\\Users\\Bernardo '
+   'Dias\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\email\\encoders.py',
+   'PYMODULE'),
+  ('email.errors',
+   'C:\\Users\\Bernardo '
+   'Dias\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\email\\errors.py',
+   'PYMODULE'),
+  ('email.feedparser',
+   'C:\\Users\\Bernardo '
+   'Dias\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\email\\feedparser.py',
+   'PYMODULE'),
+  ('email.generator',
+   'C:\\Users\\Bernardo '
+   'Dias\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\email\\generator.py',
+   'PYMODULE'),
+  ('email.header',
+   'C:\\Users\\Bernardo '
+   'Dias\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\email\\header.py',
+   'PYMODULE'),
+  ('email.headerregistry',
+   'C:\\Users\\Bernardo '
+   'Dias\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\email\\headerregistry.py',
+   'PYMODULE'),
+  ('email.iterators',
+   'C:\\Users\\Bernardo '
+   'Dias\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\email\\iterators.py',
+   'PYMODULE'),
+  ('email.message',
+   'C:\\Users\\Bernardo '
+   'Dias\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\email\\message.py',
+   'PYMODULE'),
+  ('email.parser',
+   'C:\\Users\\Bernardo '
+   'Dias\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\email\\parser.py',
+   'PYMODULE'),
+  ('email.policy',
+   'C:\\Users\\Bernardo '
+   'Dias\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\email\\policy.py',
+   'PYMODULE'),
+  ('email.quoprimime',
+   'C:\\Users\\Bernardo '
+   'Dias\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\email\\quoprimime.py',
+   'PYMODULE'),
+  ('email.utils',
+   'C:\\Users\\Bernardo '
+   'Dias\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\email\\utils.py',
+   'PYMODULE'),
+  ('fighters', '-', 'PYMODULE'),
+  ('fighters.animation_loader',
+   'C:\\Users\\Bernardo '
+   'Dias\\Documents\\GitHub\\Street-Fighter-Game\\fighters\\animation_loader.py',
+   'PYMODULE'),
+  ('fighters.fighter',
+   'C:\\Users\\Bernardo '
+   'Dias\\Documents\\GitHub\\Street-Fighter-Game\\fighters\\fighter.py',
+   'PYMODULE'),
+  ('fnmatch',
+   'C:\\Users\\Bernardo '
+   'Dias\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\fnmatch.py',
+   'PYMODULE'),
+  ('fractions',
+   'C:\\Users\\Bernardo '
+   'Dias\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\fractions.py',
+   'PYMODULE'),
+  ('frames', '-', 'PYMODULE'),
+  ('frames.character_select',
+   'C:\\Users\\Bernardo '
+   'Dias\\Documents\\GitHub\\Street-Fighter-Game\\frames\\character_select.py',
+   'PYMODULE'),
+  ('frames.game',
+   'C:\\Users\\Bernardo '
+   'Dias\\Documents\\GitHub\\Street-Fighter-Game\\frames\\game.py',
+   'PYMODULE'),
+  ('frames.menu',
+   'C:\\Users\\Bernardo '
+   'Dias\\Documents\\GitHub\\Street-Fighter-Game\\frames\\menu.py',
+   'PYMODULE'),
+  ('frames.online_character_select',
+   'C:\\Users\\Bernardo '
+   'Dias\\Documents\\GitHub\\Street-Fighter-Game\\frames\\online_character_select.py',
+   'PYMODULE'),
+  ('frames.online_game',
+   'C:\\Users\\Bernardo '
+   'Dias\\Documents\\GitHub\\Street-Fighter-Game\\frames\\online_game.py',
+   'PYMODULE'),
+  ('frames.online_menu',
+   'C:\\Users\\Bernardo '
+   'Dias\\Documents\\GitHub\\Street-Fighter-Game\\frames\\online_menu.py',
+   'PYMODULE'),
+  ('ftplib',
+   'C:\\Users\\Bernardo '
+   'Dias\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\ftplib.py',
+   'PYMODULE'),
+  ('getopt',
+   'C:\\Users\\Bernardo '
+   'Dias\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\getopt.py',
+   'PYMODULE'),
+  ('gettext',
+   'C:\\Users\\Bernardo '
+   'Dias\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\gettext.py',
+   'PYMODULE'),
+  ('glob',
+   'C:\\Users\\Bernardo '
+   'Dias\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\glob.py',
+   'PYMODULE'),
+  ('gzip',
+   'C:\\Users\\Bernardo '
+   'Dias\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\gzip.py',
+   'PYMODULE'),
+  ('hashlib',
+   'C:\\Users\\Bernardo '
+   'Dias\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\hashlib.py',
+   'PYMODULE'),
+  ('http',
+   'C:\\Users\\Bernardo '
+   'Dias\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\http\\__init__.py',
+   'PYMODULE'),
+  ('http.client',
+   'C:\\Users\\Bernardo '
+   'Dias\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\http\\client.py',
+   'PYMODULE'),
+  ('http.cookiejar',
+   'C:\\Users\\Bernardo '
+   'Dias\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\http\\cookiejar.py',
+   'PYMODULE'),
+  ('importlib',
+   'C:\\Users\\Bernardo '
+   'Dias\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\importlib\\__init__.py',
+   'PYMODULE'),
+  ('importlib._abc',
+   'C:\\Users\\Bernardo '
+   'Dias\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\importlib\\_abc.py',
+   'PYMODULE'),
+  ('importlib._bootstrap',
+   'C:\\Users\\Bernardo '
+   'Dias\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\importlib\\_bootstrap.py',
+   'PYMODULE'),
+  ('importlib._bootstrap_external',
+   'C:\\Users\\Bernardo '
+   'Dias\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\importlib\\_bootstrap_external.py',
+   'PYMODULE'),
+  ('importlib.abc',
+   'C:\\Users\\Bernardo '
+   'Dias\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\importlib\\abc.py',
+   'PYMODULE'),
+  ('importlib.machinery',
+   'C:\\Users\\Bernardo '
+   'Dias\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\importlib\\machinery.py',
+   'PYMODULE'),
+  ('importlib.metadata',
+   'C:\\Users\\Bernardo '
+   'Dias\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\importlib\\metadata\\__init__.py',
+   'PYMODULE'),
+  ('importlib.metadata._adapters',
+   'C:\\Users\\Bernardo '
+   'Dias\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\importlib\\metadata\\_adapters.py',
+   'PYMODULE'),
+  ('importlib.metadata._collections',
+   'C:\\Users\\Bernardo '
+   'Dias\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\importlib\\metadata\\_collections.py',
+   'PYMODULE'),
+  ('importlib.metadata._functools',
+   'C:\\Users\\Bernardo '
+   'Dias\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\importlib\\metadata\\_functools.py',
+   'PYMODULE'),
+  ('importlib.metadata._itertools',
+   'C:\\Users\\Bernardo '
+   'Dias\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\importlib\\metadata\\_itertools.py',
+   'PYMODULE'),
+  ('importlib.metadata._meta',
+   'C:\\Users\\Bernardo '
+   'Dias\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\importlib\\metadata\\_meta.py',
+   'PYMODULE'),
+  ('importlib.metadata._text',
+   'C:\\Users\\Bernardo '
+   'Dias\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\importlib\\metadata\\_text.py',
+   'PYMODULE'),
+  ('importlib.readers',
+   'C:\\Users\\Bernardo '
+   'Dias\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\importlib\\readers.py',
+   'PYMODULE'),
+  ('importlib.resources',
+   'C:\\Users\\Bernardo '
+   'Dias\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\importlib\\resources\\__init__.py',
+   'PYMODULE'),
+  ('importlib.resources._adapters',
+   'C:\\Users\\Bernardo '
+   'Dias\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\importlib\\resources\\_adapters.py',
+   'PYMODULE'),
+  ('importlib.resources._common',
+   'C:\\Users\\Bernardo '
+   'Dias\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\importlib\\resources\\_common.py',
+   'PYMODULE'),
+  ('importlib.resources._functional',
+   'C:\\Users\\Bernardo '
+   'Dias\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\importlib\\resources\\_functional.py',
+   'PYMODULE'),
+  ('importlib.resources._itertools',
+   'C:\\Users\\Bernardo '
+   'Dias\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\importlib\\resources\\_itertools.py',
+   'PYMODULE'),
+  ('importlib.resources.abc',
+   'C:\\Users\\Bernardo '
+   'Dias\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\importlib\\resources\\abc.py',
+   'PYMODULE'),
+  ('importlib.resources.readers',
+   'C:\\Users\\Bernardo '
+   'Dias\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\importlib\\resources\\readers.py',
+   'PYMODULE'),
+  ('importlib.util',
+   'C:\\Users\\Bernardo '
+   'Dias\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\importlib\\util.py',
+   'PYMODULE'),
+  ('inspect',
+   'C:\\Users\\Bernardo '
+   'Dias\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\inspect.py',
+   'PYMODULE'),
+  ('ipaddress',
+   'C:\\Users\\Bernardo '
+   'Dias\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\ipaddress.py',
+   'PYMODULE'),
+  ('json',
+   'C:\\Users\\Bernardo '
+   'Dias\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\json\\__init__.py',
+   'PYMODULE'),
+  ('json.decoder',
+   'C:\\Users\\Bernardo '
+   'Dias\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\json\\decoder.py',
+   'PYMODULE'),
+  ('json.encoder',
+   'C:\\Users\\Bernardo '
+   'Dias\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\json\\encoder.py',
+   'PYMODULE'),
+  ('json.scanner',
+   'C:\\Users\\Bernardo '
+   'Dias\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\json\\scanner.py',
+   'PYMODULE'),
+  ('logging',
+   'C:\\Users\\Bernardo '
+   'Dias\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\logging\\__init__.py',
+   'PYMODULE'),
+  ('lzma',
+   'C:\\Users\\Bernardo '
+   'Dias\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\lzma.py',
+   'PYMODULE'),
+  ('mimetypes',
+   'C:\\Users\\Bernardo '
+   'Dias\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\mimetypes.py',
+   'PYMODULE'),
+  ('netrc',
+   'C:\\Users\\Bernardo '
+   'Dias\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\netrc.py',
+   'PYMODULE'),
+  ('network', '-', 'PYMODULE'),
+  ('network.client',
+   'C:\\Users\\Bernardo '
+   'Dias\\Documents\\GitHub\\Street-Fighter-Game\\network\\client.py',
+   'PYMODULE'),
+  ('network.protocol',
+   'C:\\Users\\Bernardo '
+   'Dias\\Documents\\GitHub\\Street-Fighter-Game\\network\\protocol.py',
+   'PYMODULE'),
+  ('network.server',
+   'C:\\Users\\Bernardo '
+   'Dias\\Documents\\GitHub\\Street-Fighter-Game\\network\\server.py',
+   'PYMODULE'),
+  ('numbers',
+   'C:\\Users\\Bernardo '
+   'Dias\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\numbers.py',
+   'PYMODULE'),
+  ('opcode',
+   'C:\\Users\\Bernardo '
+   'Dias\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\opcode.py',
+   'PYMODULE'),
+  ('pathlib',
+   'C:\\Users\\Bernardo '
+   'Dias\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\pathlib\\__init__.py',
+   'PYMODULE'),
+  ('pathlib._os',
+   'C:\\Users\\Bernardo '
+   'Dias\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\pathlib\\_os.py',
+   'PYMODULE'),
+  ('pickle',
+   'C:\\Users\\Bernardo '
+   'Dias\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\pickle.py',
+   'PYMODULE'),
+  ('platform',
+   'C:\\Users\\Bernardo '
+   'Dias\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\platform.py',
+   'PYMODULE'),
+  ('pprint',
+   'C:\\Users\\Bernardo '
+   'Dias\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\pprint.py',
+   'PYMODULE'),
+  ('py_compile',
+   'C:\\Users\\Bernardo '
+   'Dias\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\py_compile.py',
+   'PYMODULE'),
+  ('pygame',
+   'C:\\Users\\Bernardo '
+   'Dias\\Documents\\GitHub\\Street-Fighter-Game\\.venv\\Lib\\site-packages\\pygame\\__init__.py',
+   'PYMODULE'),
+  ('pygame._data_classes',
+   'C:\\Users\\Bernardo '
+   'Dias\\Documents\\GitHub\\Street-Fighter-Game\\.venv\\Lib\\site-packages\\pygame\\_data_classes.py',
+   'PYMODULE'),
+  ('pygame._debug',
+   'C:\\Users\\Bernardo '
+   'Dias\\Documents\\GitHub\\Street-Fighter-Game\\.venv\\Lib\\site-packages\\pygame\\_debug.py',
+   'PYMODULE'),
+  ('pygame._sdl2',
+   'C:\\Users\\Bernardo '
+   'Dias\\Documents\\GitHub\\Street-Fighter-Game\\.venv\\Lib\\site-packages\\pygame\\_sdl2\\__init__.py',
+   'PYMODULE'),
+  ('pygame.colordict',
+   'C:\\Users\\Bernardo '
+   'Dias\\Documents\\GitHub\\Street-Fighter-Game\\.venv\\Lib\\site-packages\\pygame\\colordict.py',
+   'PYMODULE'),
+  ('pygame.cursors',
+   'C:\\Users\\Bernardo '
+   'Dias\\Documents\\GitHub\\Street-Fighter-Game\\.venv\\Lib\\site-packages\\pygame\\cursors.py',
+   'PYMODULE'),
+  ('pygame.ftfont',
+   'C:\\Users\\Bernardo '
+   'Dias\\Documents\\GitHub\\Street-Fighter-Game\\.venv\\Lib\\site-packages\\pygame\\ftfont.py',
+   'PYMODULE'),
+  ('pygame.locals',
+   'C:\\Users\\Bernardo '
+   'Dias\\Documents\\GitHub\\Street-Fighter-Game\\.venv\\Lib\\site-packages\\pygame\\locals.py',
+   'PYMODULE'),
+  ('pygame.macosx',
+   'C:\\Users\\Bernardo '
+   'Dias\\Documents\\GitHub\\Street-Fighter-Game\\.venv\\Lib\\site-packages\\pygame\\macosx.py',
+   'PYMODULE'),
+  ('pygame.pkgdata',
+   'C:\\Users\\Bernardo '
+   'Dias\\Documents\\GitHub\\Street-Fighter-Game\\.venv\\Lib\\site-packages\\pygame\\pkgdata.py',
+   'PYMODULE'),
+  ('pygame.sndarray',
+   'C:\\Users\\Bernardo '
+   'Dias\\Documents\\GitHub\\Street-Fighter-Game\\.venv\\Lib\\site-packages\\pygame\\sndarray.py',
+   'PYMODULE'),
+  ('pygame.sprite',
+   'C:\\Users\\Bernardo '
+   'Dias\\Documents\\GitHub\\Street-Fighter-Game\\.venv\\Lib\\site-packages\\pygame\\sprite.py',
+   'PYMODULE'),
+  ('pygame.surfarray',
+   'C:\\Users\\Bernardo '
+   'Dias\\Documents\\GitHub\\Street-Fighter-Game\\.venv\\Lib\\site-packages\\pygame\\surfarray.py',
+   'PYMODULE'),
+  ('pygame.sysfont',
+   'C:\\Users\\Bernardo '
+   'Dias\\Documents\\GitHub\\Street-Fighter-Game\\.venv\\Lib\\site-packages\\pygame\\sysfont.py',
+   'PYMODULE'),
+  ('pygame.typing',
+   'C:\\Users\\Bernardo '
+   'Dias\\Documents\\GitHub\\Street-Fighter-Game\\.venv\\Lib\\site-packages\\pygame\\typing.py',
+   'PYMODULE'),
+  ('pygame.version',
+   'C:\\Users\\Bernardo '
+   'Dias\\Documents\\GitHub\\Street-Fighter-Game\\.venv\\Lib\\site-packages\\pygame\\version.py',
+   'PYMODULE'),
+  ('queue',
+   'C:\\Users\\Bernardo '
+   'Dias\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\queue.py',
+   'PYMODULE'),
+  ('quopri',
+   'C:\\Users\\Bernardo '
+   'Dias\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\quopri.py',
+   'PYMODULE'),
+  ('random',
+   'C:\\Users\\Bernardo '
+   'Dias\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\random.py',
+   'PYMODULE'),
+  ('selectors',
+   'C:\\Users\\Bernardo '
+   'Dias\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\selectors.py',
+   'PYMODULE'),
+  ('shutil',
+   'C:\\Users\\Bernardo '
+   'Dias\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\shutil.py',
+   'PYMODULE'),
+  ('signal',
+   'C:\\Users\\Bernardo '
+   'Dias\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\signal.py',
+   'PYMODULE'),
+  ('socket',
+   'C:\\Users\\Bernardo '
+   'Dias\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\socket.py',
+   'PYMODULE'),
+  ('ssl',
+   'C:\\Users\\Bernardo '
+   'Dias\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\ssl.py',
+   'PYMODULE'),
+  ('statistics',
+   'C:\\Users\\Bernardo '
+   'Dias\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\statistics.py',
+   'PYMODULE'),
+  ('string',
+   'C:\\Users\\Bernardo '
+   'Dias\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\string\\__init__.py',
+   'PYMODULE'),
+  ('stringprep',
+   'C:\\Users\\Bernardo '
+   'Dias\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\stringprep.py',
+   'PYMODULE'),
+  ('subprocess',
+   'C:\\Users\\Bernardo '
+   'Dias\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\subprocess.py',
+   'PYMODULE'),
+  ('sysconfig',
+   'C:\\Users\\Bernardo '
+   'Dias\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\sysconfig\\__init__.py',
+   'PYMODULE'),
+  ('tarfile',
+   'C:\\Users\\Bernardo '
+   'Dias\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\tarfile.py',
+   'PYMODULE'),
+  ('tempfile',
+   'C:\\Users\\Bernardo '
+   'Dias\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\tempfile.py',
+   'PYMODULE'),
+  ('textwrap',
+   'C:\\Users\\Bernardo '
+   'Dias\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\textwrap.py',
+   'PYMODULE'),
+  ('threading',
+   'C:\\Users\\Bernardo '
+   'Dias\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\threading.py',
+   'PYMODULE'),
+  ('token',
+   'C:\\Users\\Bernardo '
+   'Dias\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\token.py',
+   'PYMODULE'),
+  ('tokenize',
+   'C:\\Users\\Bernardo '
+   'Dias\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\tokenize.py',
+   'PYMODULE'),
+  ('tracemalloc',
+   'C:\\Users\\Bernardo '
+   'Dias\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\tracemalloc.py',
+   'PYMODULE'),
+  ('typing',
+   'C:\\Users\\Bernardo '
+   'Dias\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\typing.py',
+   'PYMODULE'),
+  ('urllib',
+   'C:\\Users\\Bernardo '
+   'Dias\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\urllib\\__init__.py',
+   'PYMODULE'),
+  ('urllib.error',
+   'C:\\Users\\Bernardo '
+   'Dias\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\urllib\\error.py',
+   'PYMODULE'),
+  ('urllib.parse',
+   'C:\\Users\\Bernardo '
+   'Dias\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\urllib\\parse.py',
+   'PYMODULE'),
+  ('urllib.request',
+   'C:\\Users\\Bernardo '
+   'Dias\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\urllib\\request.py',
+   'PYMODULE'),
+  ('urllib.response',
+   'C:\\Users\\Bernardo '
+   'Dias\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\urllib\\response.py',
+   'PYMODULE'),
+  ('zipfile',
+   'C:\\Users\\Bernardo '
+   'Dias\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\zipfile\\__init__.py',
+   'PYMODULE'),
+  ('zipfile._path',
+   'C:\\Users\\Bernardo '
+   'Dias\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\zipfile\\_path\\__init__.py',
+   'PYMODULE'),
+  ('zipfile._path.glob',
+   'C:\\Users\\Bernardo '
+   'Dias\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\zipfile\\_path\\glob.py',
+   'PYMODULE')])
