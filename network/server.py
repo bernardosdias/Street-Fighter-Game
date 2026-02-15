@@ -11,6 +11,7 @@ from network.protocol import (
     NetworkProtocol,
     create_error_message,
     create_game_state_update_message,
+    create_map_selected_message,
     DEFAULT_SERVER_PORT,
     BUFFER_SIZE,
 )
@@ -38,6 +39,7 @@ class GameServer:
         self.last_hit_ms = {1: 0, 2: 0}
         self.match_state = {}
         self._reset_match_state()
+        self.selected_map_id = "default"
 
     def _reset_match_state(self):
         self.match_state = {
@@ -49,6 +51,7 @@ class GameServer:
             "round_over_time_ms": 0,
         }
         self.last_hit_ms = {1: 0, 2: 0}
+        self.selected_map_id = "default"
 
     def _reset_round_state(self):
         self.match_state["player1_health"] = 100
@@ -228,6 +231,17 @@ class GameServer:
 
         if message.msg_type == MessageType.HIT:
             self._handle_hit_message(player_id, message)
+            return
+
+        if message.msg_type == MessageType.MAP_SELECT:
+            map_id = message.data.get("map_id", "default")
+            with self.players_lock:
+                # Host/player 1 escolhe o mapa para manter decisao unica.
+                if player_id != 1 or not self.game_started:
+                    return
+                self.selected_map_id = map_id
+
+            self._broadcast_message(create_map_selected_message(map_id))
             return
 
         if message.msg_type == MessageType.PLAYER_INPUT:
@@ -450,4 +464,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-

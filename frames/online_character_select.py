@@ -28,6 +28,11 @@ class OnlineCharacterSelectFrame:
         self.title_font = pygame.font.Font(font_path(), 60)
         self.option_font = pygame.font.Font(font_path(), 40)
         self.message_font = pygame.font.Font(font_path(), 25)
+        self.card_size = 110
+        self.gap_x = 20
+        self.gap_y = 20
+        self.grid_margin_x = 24
+        self.grid_top = 140
 
     def _load_characters(self):
         characters = []
@@ -84,7 +89,7 @@ class OnlineCharacterSelectFrame:
                 p1_char = msg.data.get("player1_character")
                 p2_char = msg.data.get("player2_character")
                 return {
-                    "next": "online_game",
+                    "next": "online_map_select",
                     "client": self.client,
                     "player_id": self.player_id,
                     "player1_character": p1_char,
@@ -96,12 +101,22 @@ class OnlineCharacterSelectFrame:
             if event.type == pygame.KEYDOWN:
                 if not self.ready:
                     if event.key == pygame.K_LEFT:
-                        self.selected_option = (self.selected_option - 1) % len(self.characters)
+                        self._move_selection(-1, 0)
                         self.anim_index = 0
                         self.anim_timer = pygame.time.get_ticks()
 
                     elif event.key == pygame.K_RIGHT:
-                        self.selected_option = (self.selected_option + 1) % len(self.characters)
+                        self._move_selection(1, 0)
+                        self.anim_index = 0
+                        self.anim_timer = pygame.time.get_ticks()
+
+                    elif event.key == pygame.K_UP:
+                        self._move_selection(0, -1)
+                        self.anim_index = 0
+                        self.anim_timer = pygame.time.get_ticks()
+
+                    elif event.key == pygame.K_DOWN:
+                        self._move_selection(0, 1)
                         self.anim_index = 0
                         self.anim_timer = pygame.time.get_ticks()
 
@@ -138,36 +153,6 @@ class OnlineCharacterSelectFrame:
 
         self._draw_character_cards(screen)
 
-        character = self.characters[self.selected_option]
-        sheet = character["image"]
-        scale = character["scale"]
-        offset_x, offset_y = character.get("offset", [0, 0])
-
-        sheet_width = sheet.get_width()
-        sheet_height = sheet.get_height()
-        frame_count = max(1, character["idle_frames"])
-
-        frame_width = sheet_width // frame_count
-        frame_height = sheet_height
-
-        frame_x = self.anim_index * frame_width
-        if frame_x + frame_width > sheet_width:
-            self.anim_index = 0
-            frame_x = 0
-
-        frame = sheet.subsurface(frame_x, 0, frame_width, frame_height)
-        preview_image = pygame.transform.scale(
-            frame, (int(frame_width * scale), int(frame_height * scale))
-        )
-
-        preview_x = self.screen_width // 2 - preview_image.get_width() // 2 + offset_x
-        preview_y = 300 - preview_image.get_height() // 2 + offset_y
-        screen.blit(preview_image, (preview_x, preview_y))
-
-        name_surface = self.title_font.render(character["name"], True, (255, 255, 0))
-        name_rect = name_surface.get_rect(center=(self.screen_width // 2, 430))
-        screen.blit(name_surface, name_rect)
-
         if self.ready:
             if self.opponent_character:
                 status = "Waiting for game to start..."
@@ -176,40 +161,66 @@ class OnlineCharacterSelectFrame:
                 status = "Waiting for opponent to select..."
                 opponent_status = ""
         else:
-            status = "LEFT RIGHT to select | ENTER to confirm"
+            status = "ARROWS to select | ENTER to confirm"
             if self.opponent_character:
                 opponent_status = f"Opponent selected: {self.opponent_character}"
             else:
                 opponent_status = "Opponent is selecting..."
 
         status_label = self.message_font.render(status, True, (200, 200, 200))
-        screen.blit(status_label, (self.screen_width // 2 - status_label.get_width() // 2, 510))
+        screen.blit(status_label, (self.screen_width // 2 - status_label.get_width() // 2, 520))
 
         if opponent_status:
             opp_label = self.message_font.render(opponent_status, True, (100, 200, 255))
-            screen.blit(opp_label, (self.screen_width // 2 - opp_label.get_width() // 2, 540))
+            screen.blit(opp_label, (self.screen_width // 2 - opp_label.get_width() // 2, 550))
 
         esc_label = self.message_font.render("ESC to disconnect", True, (150, 150, 150))
         screen.blit(
             esc_label,
-            (self.screen_width // 2 - esc_label.get_width() // 2, self.screen_height - 30),
+            (self.screen_width // 2 - esc_label.get_width() // 2, self.screen_height - 25),
         )
 
+    def _grid_cols(self):
+        usable_width = self.screen_width - (2 * self.grid_margin_x)
+        cell_w = self.card_size + self.gap_x
+        return max(1, (usable_width + self.gap_x) // cell_w)
+
+    def _move_selection(self, dx, dy):
+        total = len(self.characters)
+        if total == 0:
+            return
+
+        cols = self._grid_cols()
+        row = self.selected_option // cols
+        col = self.selected_option % cols
+
+        if dx != 0:
+            self.selected_option = (self.selected_option + dx) % total
+            return
+
+        if dy != 0:
+            target_row = row + dy
+            target_index = target_row * cols + col
+            if 0 <= target_index < total:
+                self.selected_option = target_index
+
     def _draw_character_cards(self, screen):
-        total_chars = len(self.characters)
-        spacing = min(120, self.screen_width // max(1, total_chars + 1))
-        card_size = 86
-        y_pos = self.screen_height - 155
+        cols = self._grid_cols()
+        start_x = self.grid_margin_x
+        start_y = self.grid_top
 
         for i, character in enumerate(self.characters):
-            x_center = (self.screen_width // 2) - ((total_chars - 1) * spacing // 2) + (i * spacing)
+            row = i // cols
+            col = i % cols
+            x = start_x + col * (self.card_size + self.gap_x)
+            y = start_y + row * (self.card_size + self.gap_y)
             frame_image = self._get_character_icon(character)
 
             card_rect = pygame.Rect(
-                x_center - card_size // 2,
-                y_pos - card_size // 2,
-                card_size,
-                card_size,
+                x,
+                y,
+                self.card_size,
+                self.card_size,
             )
 
             if self.ready and i == self.selected_option:
@@ -230,4 +241,4 @@ class OnlineCharacterSelectFrame:
         frame_width = sheet.get_width() // frame_count
         frame_height = sheet.get_height()
         frame = sheet.subsurface(0, 0, frame_width, frame_height)
-        return pygame.transform.smoothscale(frame, (72, 72))
+        return pygame.transform.smoothscale(frame, (90, 90))

@@ -3,14 +3,23 @@ import pygame
 from characters.characters import CHARACTERS
 from fighters.fighter import Fighter
 from core.assets import audio_path, font_path, image_path
+from core.animated_background import AnimatedBackground
 
 
 class GameFrame:
-    def __init__(self, width, height, player1_character="Warrior", player2_character="Wizard"):
+    def __init__(self, width, height, player1_character=None, player2_character=None, map_path=None):
         self.width = width
         self.height = height
-        self.player1_character = player1_character
-        self.player2_character = player2_character
+        available_characters = list(CHARACTERS.keys())
+        fallback_player1 = available_characters[0] if available_characters else "Ryu"
+        fallback_player2 = (
+            available_characters[1]
+            if len(available_characters) > 1
+            else fallback_player1
+        )
+        self.player1_character = player1_character or fallback_player1
+        self.player2_character = player2_character or fallback_player2
+        self.map_path = map_path
         self.ground_y = self.height - 110
 
         self.WHITE = (255, 255, 255)
@@ -73,7 +82,8 @@ class GameFrame:
         except Exception:
             self.default_sound = pygame.mixer.Sound(buffer=bytes(100))
 
-        self.bg_image = pygame.image.load(image_path("background", "background.jpg")).convert_alpha()
+        bg_path = self.map_path or image_path("background", "background.jpg")
+        self.background = AnimatedBackground(bg_path, self.width, self.height)
         self.victory_image = pygame.image.load(image_path("icons", "victory.png")).convert_alpha()
 
         self.count_font = pygame.font.Font(font_path(), 80)
@@ -86,6 +96,8 @@ class GameFrame:
         return None
 
     def update(self):
+        self.background.update()
+
         if self.intro_count <= 0:
             self.fighter1.move(self.width, self.height, None, self.fighter2, self.round_over)
             if self.ai_enabled:
@@ -141,8 +153,7 @@ class GameFrame:
             screen.blit(self.victory_image, (360, 150))
 
     def _draw_bg(self, screen):
-        bg = pygame.transform.scale(self.bg_image, (self.width, self.height))
-        screen.blit(bg, (0, 0))
+        self.background.draw(screen)
 
     def draw_hp(self, screen, hp, x, y):
         ratio = hp / 100
@@ -238,4 +249,3 @@ class GameFrame:
         self.ai_controls = controls
         self.ai_next_decision = now + random.randint(90, 170)
         return self.ai_controls
-

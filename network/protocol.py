@@ -16,6 +16,8 @@ class MessageType(Enum):
     # CHARACTER SELECTION
     CHARACTER_SELECT = "CHARACTER_SELECT"
     CHARACTER_SELECTED = "CHARACTER_SELECTED"
+    MAP_SELECT = "MAP_SELECT"
+    MAP_SELECTED = "MAP_SELECTED"
     BOTH_READY = "BOTH_READY"
 
     # GAME STATE
@@ -95,6 +97,14 @@ def create_connect_message(player_name):
 
 def create_character_select_message(character_name):
     return Message(MessageType.CHARACTER_SELECT, {"character": character_name})
+
+
+def create_map_select_message(map_id):
+    return Message(MessageType.MAP_SELECT, {"map_id": map_id})
+
+
+def create_map_selected_message(map_id):
+    return Message(MessageType.MAP_SELECTED, {"map_id": map_id})
 
 
 def create_player_input_message(keys_pressed):

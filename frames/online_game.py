@@ -3,17 +3,19 @@ from characters.characters import CHARACTERS
 from fighters.fighter import Fighter
 from network.protocol import MessageType, create_player_state_update_message
 from core.assets import audio_path, font_path, image_path
+from core.animated_background import AnimatedBackground
 
 
 class OnlineGameFrame:
     """Game frame para multiplayer online"""
 
-    def __init__(self, width, height, client, player_id, player1_character, player2_character, is_host):
+    def __init__(self, width, height, client, player_id, player1_character, player2_character, is_host, map_path=None):
         self.width = width
         self.height = height
         self.client = client
         self.player_id = player_id
         self.is_host = is_host
+        self.map_path = map_path
 
         self.ground_y = self.height - 110
 
@@ -85,7 +87,8 @@ class OnlineGameFrame:
         except Exception:
             self.default_sound = pygame.mixer.Sound(buffer=bytes(100))
 
-        self.bg_image = pygame.image.load(image_path("background", "background.jpg")).convert_alpha()
+        bg_path = self.map_path or image_path("background", "background.jpg")
+        self.background = AnimatedBackground(bg_path, self.width, self.height)
         self.victory_image = pygame.image.load(image_path("icons", "victory.png")).convert_alpha()
 
         self.count_font = pygame.font.Font(font_path(), 80)
@@ -104,6 +107,8 @@ class OnlineGameFrame:
         return None
 
     def update(self):
+        self.background.update()
+
         while self.client.has_messages():
             msg = self.client.get_message()
 
@@ -270,8 +275,7 @@ class OnlineGameFrame:
             self.opponent_fighter = self.fighter1
 
     def draw(self, screen):
-        bg = pygame.transform.scale(self.bg_image, (self.width, self.height))
-        screen.blit(bg, (0, 0))
+        self.background.draw(screen)
 
         self.draw_hp(screen, self.fighter1.health, 20, 20)
         self.draw_hp(screen, self.fighter2.health, 580, 20)
