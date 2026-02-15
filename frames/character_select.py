@@ -1,6 +1,7 @@
 from characters.characters import CHARACTERS
 import pygame
 from core.assets import font_path, image_path
+from fighters.animation_loader import load_animation_region
 
 
 class CharacterSelectFrame:
@@ -32,17 +33,28 @@ class CharacterSelectFrame:
                 if not idle_anim:
                     continue
 
-                idle_path, idle_frames = idle_anim
-                full_path = image_path(char_data["path"], idle_path)
-                idle_sheet = pygame.image.load(full_path).convert_alpha()
+                if isinstance(idle_anim, dict):
+                    idle_frames = load_animation_region(
+                        char_data["path"],
+                        idle_anim["sheet"],
+                        1,
+                        idle_anim.get("region"),
+                        idle_anim.get("frames"),
+                    )
+                    portrait = pygame.transform.smoothscale(idle_frames[0], (90, 90))
+                else:
+                    idle_path, _ = idle_anim
+                    full_path = image_path(char_data["path"], idle_path)
+                    idle_sheet = pygame.image.load(full_path).convert_alpha()
+                    portrait = pygame.transform.smoothscale(idle_sheet, (90, 90))
 
                 characters.append(
                     {
                         "name": char_name,
-                        "image": idle_sheet,
+                        "image": portrait,
                         "size": char_data["size"],
                         "scale": char_data["scale"],
-                        "idle_frames": idle_frames,
+                        "idle_frames": 1,
                         "offset": char_data["offset"],
                     }
                 )
@@ -175,9 +187,4 @@ class CharacterSelectFrame:
             screen.blit(frame_image, icon_rect)
 
     def _get_character_icon(self, character):
-        sheet = character["image"]
-        frame_count = max(1, character["idle_frames"])
-        frame_width = sheet.get_width() // frame_count
-        frame_height = sheet.get_height()
-        frame = sheet.subsurface(0, 0, frame_width, frame_height)
-        return pygame.transform.smoothscale(frame, (90, 90))
+        return character["image"]
