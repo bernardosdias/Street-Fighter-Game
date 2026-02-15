@@ -18,6 +18,21 @@ REGIONS = {
     "portrait": (0.62, 0.86, 0.18, 0.12),
 }
 
+# Dedicated region for character-select idle thumbnails.
+# Narrower height avoids leaking into next rows (e.g. "L.Punch" labels).
+SELECT_IDLE_REGION = (0.00, 0.00, 0.12, 0.09)
+
+# Per-character overrides for character-select idle thumbnails.
+# Format: "Character Name": {"region": (x, y, w, h), "frames": <int or None>}
+SELECT_IDLE_OVERRIDES = {
+    # Examples you can tune:
+    # "Fei Long": {"region": (0.00, 0.00, 0.13, 0.09), "frames": None},
+    # "Sagat": {"region": (0.00, 0.00, 0.16, 0.09), "frames": None},
+    
+    "Fei Long": {"region": (0.00, 0.00, 0.40, 0.1), "frames": 10}
+
+}
+
 FRAME_COUNTS = {
     # Hints tuned for SSF2 atlas slices.
     "idle": 4,
@@ -86,6 +101,9 @@ def _build_characters():
         relative_dir = str(char_dir.resolve().relative_to(BASE_IMAGES_DIR)).replace("\\", "/")
         character_name = _safe_title(char_dir.name)
         scale = _estimate_scale(sheet)
+        select_override = SELECT_IDLE_OVERRIDES.get(character_name, {})
+        select_region = select_override.get("region", SELECT_IDLE_REGION)
+        select_frames = select_override.get("frames", None)
 
         characters[character_name] = {
             "path": relative_dir,
@@ -99,6 +117,8 @@ def _build_characters():
                 "sheet": sheet.name,
                 "region": REGIONS["portrait"],
             },
+            "select_idle_region": select_region,
+            "select_idle_frames": select_frames,
             "animations": {
                 "idle": _anim_spec(sheet.name, "idle"),
                 "run": _anim_spec(sheet.name, "run"),

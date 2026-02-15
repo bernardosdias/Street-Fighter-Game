@@ -5,7 +5,6 @@ from network.client import GameClient
 from network.protocol import MessageType
 from core.assets import font_path, image_path
 
-
 class OnlineMenuFrame:
     """Menu para multiplayer online"""
 

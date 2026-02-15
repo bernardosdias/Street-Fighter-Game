@@ -12,17 +12,20 @@ class CharacterSelectFrame:
         self.anim_timer = pygame.time.get_ticks()
         self.anim_speed = 100
 
+        self.card_size = 110
+        self.gap_x = 20
+        self.gap_y = 20
+        self.grid_margin_x = 24
+        self.grid_top = 140
+        self.icon_size = 90
+        self.icon_height_ratio = 0.78
+
         self.characters = self._load_characters()
         self.selected_option = 0
 
         self.title_font = pygame.font.Font(font_path(), 60)
         self.option_font = pygame.font.Font(font_path(), 40)
         self.instructions_font = pygame.font.Font(font_path(), 25)
-        self.card_size = 110
-        self.gap_x = 20
-        self.gap_y = 20
-        self.grid_margin_x = 24
-        self.grid_top = 140
 
     def _load_characters(self):
         characters = []
@@ -34,27 +37,29 @@ class CharacterSelectFrame:
                     continue
 
                 if isinstance(idle_anim, dict):
+                    select_region = char_data.get("select_idle_region", idle_anim.get("region"))
+                    select_frames = char_data.get("select_idle_frames", None)
                     idle_frames = load_animation_region(
                         char_data["path"],
                         idle_anim["sheet"],
                         1,
-                        idle_anim.get("region"),
-                        idle_anim.get("frames"),
+                        select_region,
+                        select_frames,
                     )
-                    portrait = pygame.transform.smoothscale(idle_frames[0], (90, 90))
+                    icon_frames = self._build_icon_frames(idle_frames)
                 else:
                     idle_path, _ = idle_anim
                     full_path = image_path(char_data["path"], idle_path)
                     idle_sheet = pygame.image.load(full_path).convert_alpha()
-                    portrait = pygame.transform.smoothscale(idle_sheet, (90, 90))
+                    icon_frames = [self._fit_surface(idle_sheet, self.icon_size, self.icon_size)]
 
                 characters.append(
                     {
                         "name": char_name,
-                        "image": portrait,
+                        "icon_frames": icon_frames,
                         "size": char_data["size"],
                         "scale": char_data["scale"],
-                        "idle_frames": 1,
+                        "idle_frames": len(icon_frames),
                         "offset": char_data["offset"],
                     }
                 )
@@ -68,7 +73,7 @@ class CharacterSelectFrame:
             characters.append(
                 {
                     "name": "ERROR",
-                    "image": fallback,
+                    "icon_frames": [fallback],
                     "size": 100,
                     "scale": 1,
                     "idle_frames": 1,
@@ -171,7 +176,7 @@ class CharacterSelectFrame:
             col = i % cols
             x = start_x + col * (self.card_size + self.gap_x)
             y = start_y + row * (self.card_size + self.gap_y)
-            frame_image = self._get_character_icon(character)
+            frame_image = self._get_character_icon(character, i == self.selected_option)
 
             card_rect = pygame.Rect(
                 x,
@@ -186,5 +191,32 @@ class CharacterSelectFrame:
             icon_rect = frame_image.get_rect(center=card_rect.center)
             screen.blit(frame_image, icon_rect)
 
-    def _get_character_icon(self, character):
-        return character["image"]
+    def _get_character_icon(self, character, selected):
+        frames = character["icon_frames"]
+        if not frames:
+            return pygame.Surface((self.icon_size, self.icon_size), pygame.SRCALPHA)
+        if selected:
+            return frames[self.anim_index % len(frames)]
+        return frames[0]
+
+    def _build_icon_frames(self, frames):
+        if not frames:
+            fallback = pygame.Surface((self.icon_size, self.icon_size), pygame.SRCALPHA)
+            return [fallback]
+
+        return [self._fit_surface(frame, self.icon_size, self.icon_size) for frame in frames]
+
+    def _fit_surface(self, surface, box_w, box_h):
+        w, h = surface.get_width(), surface.get_height()
+        if w <= 0 or h <= 0:
+            return pygame.Surface((box_w, box_h), pygame.SRCALPHA)
+
+        target_box_h = int(box_h * self.icon_height_ratio)
+        scale = min(box_w / float(w), target_box_h / float(h))
+        target_w = max(1, int(w * scale))
+        target_h = max(1, int(h * scale))
+        scaled = pygame.transform.smoothscale(surface, (target_w, target_h))
+
+        out = pygame.Surface((box_w, box_h), pygame.SRCALPHA)
+        out.blit(scaled, ((box_w - target_w) // 2, (box_h - target_h) // 2))
+        return out
