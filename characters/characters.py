@@ -7,6 +7,7 @@ SUPPORTED_EXTENSIONS = {".png", ".jpg",
                         ".jpeg", ".jfif", ".webp", ".bmp", ".gif"}
 BASE_IMAGES_DIR = Path("multimedia/images").resolve()
 NON_CHUNLI_GAME_SCALE_MULTIPLIER = 2.0
+SCALED_2X_CHARACTERS = {"Cammy", "Dee Jay", "Balrog", "Dhalsim"}
 
 # Relative atlas regions: (x, y, w, h)
 REGIONS = {
@@ -138,7 +139,7 @@ def _build_characters():
             BASE_IMAGES_DIR)).replace("\\", "/")
         character_name = _safe_title(char_dir.name)
         scale = _estimate_scale(sheet)
-        if character_name != "Chun- Li":
+        if character_name in SCALED_2X_CHARACTERS:
             scale *= NON_CHUNLI_GAME_SCALE_MULTIPLIER
         select_override = SELECT_IDLE_OVERRIDES.get(character_name, {})
         select_region = select_override.get("region", SELECT_IDLE_REGION)
@@ -335,6 +336,46 @@ def _build_characters():
                     "attack2": _move_spec("H. Punch.png", None),
                     "special1": _move_spec("Yoga Fire.png", None),
                     "special2": _move_spec("Yoga Spear.png", None),
+                    "hit": _move_spec("Hit.png", None),
+                    "death": _move_spec("K.O..png", None),
+                },
+            }
+            continue
+
+        if character_name == "Blanka":
+            blanka_moves = _build_move_specs_from_dir(char_dir)
+            characters[character_name] = {
+                "path": relative_dir,
+                "scale": scale,
+                "size": 160,
+                "offset": [0, 0],
+                "foot_offset": 0,
+                "attack_range": 2.6,
+                "attack_sound": "sword.wav",
+                "select_idle_region": None,
+                "select_idle_frames": None,
+                "moves": blanka_moves,
+                "action_moves": {
+                    "idle": "idle",
+                    "run": "walking",
+                    "jump": "jumping",
+                    "crouch": "crouch",
+                    "attack1": "l_punch",
+                    "attack2": "h_punch",
+                    "special1": "rolling_attack",
+                    "special2": "electric_shock",
+                    "hit": "hit",
+                    "death": "ko",
+                },
+                "animations": {
+                    "idle": _move_spec("Idle.png", None),
+                    "run": _move_spec("Walking.png", None),
+                    "jump": _move_spec("Jumping.png", None),
+                    "crouch": _move_spec("Crouch.png", None),
+                    "attack1": _move_spec("L. Punch.png", None),
+                    "attack2": _move_spec("H. Punch.png", None),
+                    "special1": _move_spec("Rolling Attack.png", None),
+                    "special2": _move_spec("Electric Shock.png", None),
                     "hit": _move_spec("Hit.png", None),
                     "death": _move_spec("K.O..png", None),
                 },
