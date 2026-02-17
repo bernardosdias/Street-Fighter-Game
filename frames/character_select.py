@@ -32,28 +32,40 @@ class CharacterSelectFrame:
 
         for char_name, char_data in CHARACTERS.items():
             try:
-                idle_anim = char_data["animations"].get("idle")
-                if not idle_anim:
-                    continue
+                moves = char_data.get("moves", {})
+                mugshot_spec = moves.get("mugshots")
 
-                if isinstance(idle_anim, dict):
-                    select_region = char_data.get(
-                        "select_idle_region", idle_anim.get("region"))
-                    select_frames = char_data.get("select_idle_frames", None)
-                    idle_frames = load_animation_region(
+                if mugshot_spec:
+                    mugshot_frames = load_animation_region(
                         char_data["path"],
-                        idle_anim["sheet"],
+                        mugshot_spec["sheet"],
                         1,
-                        select_region,
-                        select_frames,
+                        mugshot_spec.get("region"),
+                        mugshot_spec.get("frames"),
                     )
-                    icon_frames = self._build_icon_frames(idle_frames)
+                    icon_frames = self._build_icon_frames(mugshot_frames)
                 else:
-                    idle_path, _ = idle_anim
-                    full_path = image_path(char_data["path"], idle_path)
-                    idle_sheet = pygame.image.load(full_path).convert_alpha()
-                    icon_frames = [self._fit_surface(
-                        idle_sheet, self.icon_size, self.icon_size)]
+                    idle_anim = char_data["animations"].get("idle")
+                    if not idle_anim:
+                        continue
+                    if isinstance(idle_anim, dict):
+                        select_region = char_data.get(
+                            "select_idle_region", idle_anim.get("region"))
+                        select_frames = char_data.get("select_idle_frames", None)
+                        idle_frames = load_animation_region(
+                            char_data["path"],
+                            idle_anim["sheet"],
+                            1,
+                            select_region,
+                            select_frames,
+                        )
+                        icon_frames = self._build_icon_frames(idle_frames)
+                    else:
+                        idle_path, _ = idle_anim
+                        full_path = image_path(char_data["path"], idle_path)
+                        idle_sheet = pygame.image.load(full_path).convert_alpha()
+                        icon_frames = [self._fit_surface(
+                            idle_sheet, self.icon_size, self.icon_size)]
 
                 characters.append(
                     {

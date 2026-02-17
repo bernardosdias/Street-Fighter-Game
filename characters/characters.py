@@ -382,6 +382,86 @@ def _build_characters():
             }
             continue
 
+        if character_name == "E. Honda":
+            honda_moves = _build_move_specs_from_dir(char_dir)
+            characters[character_name] = {
+                "path": relative_dir,
+                "scale": scale,
+                "size": 160,
+                "offset": [0, 0],
+                "foot_offset": 0,
+                "attack_range": 2.6,
+                "attack_sound": "sword.wav",
+                "select_idle_region": None,
+                "select_idle_frames": None,
+                "moves": honda_moves,
+                "action_moves": {
+                    "idle": "idle",
+                    "run": "walking",
+                    "jump": "jump",
+                    "crouch": "crouch",
+                    "attack1": "l_m_punch",
+                    "attack2": "h_punch",
+                    "special1": "hundred_hand_slap",
+                    "special2": "sumo_smash",
+                    "hit": "hit_heavy_hit",
+                    "death": "ko",
+                },
+                "animations": {
+                    "idle": _move_spec("Idle.png", None),
+                    "run": _move_spec("Walking.png", None),
+                    "jump": _move_spec("Jump.png", None),
+                    "crouch": _move_spec("Crouch.png", None),
+                    "attack1": _move_spec("L. M. Punch.png", None),
+                    "attack2": _move_spec("H. Punch.png", None),
+                    "special1": _move_spec("Hundred Hand Slap.png", None),
+                    "special2": _move_spec("Sumo Smash.png", None),
+                    "hit": _move_spec("Hit Heavy Hit.png", None),
+                    "death": _move_spec("K.O..png", None),
+                },
+            }
+            continue
+
+        if character_name == "Fei Long":
+            fei_moves = _build_move_specs_from_dir(char_dir)
+            characters[character_name] = {
+                "path": relative_dir,
+                "scale": scale,
+                "size": 160,
+                "offset": [0, 0],
+                "foot_offset": 0,
+                "attack_range": 2.6,
+                "attack_sound": "sword.wav",
+                "select_idle_region": None,
+                "select_idle_frames": None,
+                "moves": fei_moves,
+                "action_moves": {
+                    "idle": "idle",
+                    "run": "walking",
+                    "jump": "jump",
+                    "crouch": "crouch",
+                    "attack1": "l_punch",
+                    "attack2": "h_punch",
+                    "special1": "rekka_ken",
+                    "special2": "shien_kyaku",
+                    "hit": "head_hit",
+                    "death": "ko",
+                },
+                "animations": {
+                    "idle": _move_spec("Idle.png", None),
+                    "run": _move_spec("Walking.png", None),
+                    "jump": _move_spec("Jump.png", None),
+                    "crouch": _move_spec("Crouch.png", None),
+                    "attack1": _move_spec("L. Punch.png", None),
+                    "attack2": _move_spec("H. Punch.png", None),
+                    "special1": _move_spec("Rekka Ken.png", None),
+                    "special2": _move_spec("Shien Kyaku.png", None),
+                    "hit": _move_spec("Head Hit.png", None),
+                    "death": _move_spec("K.O..png", None),
+                },
+            }
+            continue
+
         characters[character_name] = {
             "path": relative_dir,
             "scale": scale,
