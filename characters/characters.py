@@ -173,6 +173,166 @@ def _build_characters():
             }
             continue
 
+        if character_name == "Cammy":
+            cammy_moves = _build_move_specs_from_dir(char_dir)
+            characters[character_name] = {
+                "path": relative_dir,
+                "scale": scale,
+                "size": 160,
+                "offset": [0, 0],
+                "foot_offset": 0,
+                "attack_range": 2.5,
+                "attack_sound": "sword.wav",
+                "select_idle_region": None,
+                "select_idle_frames": None,
+                "moves": cammy_moves,
+                "action_moves": {
+                    "idle": "idle",
+                    "run": "walking",
+                    "jump": "jump",
+                    "crouch": "crouch",
+                    "attack1": "l_punch",
+                    "attack2": "h_punch",
+                    "special1": "spinning_knuckle",
+                    "special2": "cannon_drill_1",
+                    "hit": "hit_face_hit",
+                    "death": "ko",
+                },
+                "animations": {
+                    "idle": _move_spec("Idle.png", None),
+                    "run": _move_spec("Walking.png", None),
+                    "jump": _move_spec("Jump.png", None),
+                    "crouch": _move_spec("Crouch.png", None),
+                    "attack1": _move_spec("L. Punch.png", None),
+                    "attack2": _move_spec("H. Punch.png", None),
+                    "special1": _move_spec("Spinning Knuckle.png", None),
+                    "special2": _move_spec("Cannon Drill 1.png", None),
+                    "hit": _move_spec("Hit Face Hit.png", None),
+                    "death": _move_spec("K.O..png", None),
+                },
+            }
+            continue
+
+        if character_name == "Chun- Li":
+            chun_moves = _build_move_specs_from_dir(char_dir)
+            characters[character_name] = {
+                "path": relative_dir,
+                "scale": scale,
+                "size": 160,
+                "offset": [0, 0],
+                "foot_offset": 0,
+                "attack_range": 2.5,
+                "attack_sound": "sword.wav",
+                "select_idle_region": None,
+                "select_idle_frames": None,
+                "moves": chun_moves,
+                "action_moves": {
+                    "idle": "idle",
+                    "run": "walking",
+                    "jump": "jump",
+                    "crouch": "crouch",
+                    "attack1": "l_punch",
+                    "attack2": "h_punch",
+                    "special1": "hyaku_retsu_kyaku",
+                    "special2": "spinning_bird_kick",
+                    "hit": "hit",
+                    "death": "ko",
+                },
+                "animations": {
+                    "idle": _move_spec("Idle.png", None),
+                    "run": _move_spec("Walking.png", None),
+                    "jump": _move_spec("Jump.png", None),
+                    "crouch": _move_spec("Crouch.png", None),
+                    "attack1": _move_spec("L. Punch.png", None),
+                    "attack2": _move_spec("H. Punch.png", None),
+                    "special1": _move_spec("Hyaku Retsu Kyaku.png", None),
+                    "special2": _move_spec("Spinning Bird Kick.png", None),
+                    "hit": _move_spec("Hit.png", None),
+                    "death": _move_spec("K.O..png", None),
+                },
+            }
+            continue
+
+        if character_name == "Dee Jay":
+            deejay_moves = _build_move_specs_from_dir(char_dir)
+            characters[character_name] = {
+                "path": relative_dir,
+                "scale": scale,
+                "size": 160,
+                "offset": [0, 0],
+                "foot_offset": 0,
+                "attack_range": 2.5,
+                "attack_sound": "sword.wav",
+                "select_idle_region": None,
+                "select_idle_frames": None,
+                "moves": deejay_moves,
+                "action_moves": {
+                    "idle": "idle",
+                    "run": "walking",
+                    "jump": "jump",
+                    "crouch": "crouch",
+                    "attack1": "l_puch",
+                    "attack2": "h_punch",
+                    "special1": "max_out",
+                    "special2": "double_dread_kick",
+                    "hit": "hit",
+                    "death": "ko",
+                },
+                "animations": {
+                    "idle": _move_spec("Idle.png", None),
+                    "run": _move_spec("Walking.png", None),
+                    "jump": _move_spec("Jump.png", None),
+                    "crouch": _move_spec("Crouch.png", None),
+                    "attack1": _move_spec("L. Puch.png", None),
+                    "attack2": _move_spec("H. Punch.png", None),
+                    "special1": _move_spec("Max Out.png", None),
+                    "special2": _move_spec("Double Dread Kick.png", None),
+                    "hit": _move_spec("Hit.png", None),
+                    "death": _move_spec("K.O..png", None),
+                },
+            }
+            continue
+
+        if character_name == "Dhalsim":
+            dhalsim_moves = _build_move_specs_from_dir(char_dir)
+            characters[character_name] = {
+                "path": relative_dir,
+                "scale": scale,
+                "size": 160,
+                "offset": [0, 0],
+                "foot_offset": 0,
+                "attack_range": 2.8,
+                "attack_sound": "sword.wav",
+                "select_idle_region": None,
+                "select_idle_frames": None,
+                "moves": dhalsim_moves,
+                "action_moves": {
+                    "idle": "idle",
+                    "run": "walking",
+                    "jump": "jump",
+                    "crouch": "crouch",
+                    "attack1": "l_punch",
+                    "attack2": "h_punch",
+                    "special1": "yoga_fire",
+                    "special2": "yoga_spear",
+                    "hit": "hit",
+                    "death": "ko",
+                },
+                "animations": {
+                    "idle": _move_spec("Idle.png", None),
+                    "run": _move_spec("Walking.png", None),
+                    "jump": _move_spec("Jump.png", None),
+                    "crouch": _move_spec("Crouch.png", None),
+                    "attack1": _move_spec("L. Punch.png", None),
+                    "attack2": _move_spec("H. Punch.png", None),
+                    "special1": _move_spec("Yoga Fire.png", None),
+                    "special2": _move_spec("Yoga Spear.png", None),
+                    "hit": _move_spec("Hit.png", None),
+                    "death": _move_spec("K.O..png", None),
+                },
+            }
+            continue
+
         characters[character_name] = {
             "path": relative_dir,
             "scale": scale,
