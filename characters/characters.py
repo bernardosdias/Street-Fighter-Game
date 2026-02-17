@@ -6,6 +6,7 @@ SSF2_DIR = Path(
 SUPPORTED_EXTENSIONS = {".png", ".jpg",
                         ".jpeg", ".jfif", ".webp", ".bmp", ".gif"}
 BASE_IMAGES_DIR = Path("multimedia/images").resolve()
+NON_CHUNLI_GAME_SCALE_MULTIPLIER = 2.0
 
 # Relative atlas regions: (x, y, w, h)
 REGIONS = {
@@ -137,6 +138,8 @@ def _build_characters():
             BASE_IMAGES_DIR)).replace("\\", "/")
         character_name = _safe_title(char_dir.name)
         scale = _estimate_scale(sheet)
+        if character_name != "Chun- Li":
+            scale *= NON_CHUNLI_GAME_SCALE_MULTIPLIER
         select_override = SELECT_IDLE_OVERRIDES.get(character_name, {})
         select_region = select_override.get("region", SELECT_IDLE_REGION)
         select_frames = select_override.get("frames", None)
