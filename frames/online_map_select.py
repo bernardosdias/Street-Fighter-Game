@@ -90,7 +90,8 @@ class OnlineMapSelectFrame:
                     self._move_selection(0, 1)
                 elif event.key == pygame.K_RETURN:
                     selected = self.maps[self.selected_option]
-                    self.client.send_message(create_map_select_message(selected["id"]))
+                    self.client.send_message(
+                        create_map_select_message(selected["id"]))
                     self.waiting_for_server = True
 
         return None
@@ -136,17 +137,21 @@ class OnlineMapSelectFrame:
             x = start_x + col * (self.thumb_w + self.thumb_gap_x)
             y = start_y + row * (self.thumb_h + self.thumb_gap_y)
             card_rect = pygame.Rect(x, y, self.thumb_w, self.thumb_h)
-            border_color = (255, 255, 0) if i == self.selected_option else (100, 100, 100)
+            border_color = (255, 255, 0) if i == self.selected_option else (
+                100, 100, 100)
 
-            thumb = pygame.transform.smoothscale(map_data["image"], (self.thumb_w, self.thumb_h))
+            thumb = pygame.transform.smoothscale(
+                map_data["image"], (self.thumb_w, self.thumb_h))
             screen.blit(thumb, card_rect)
-            pygame.draw.rect(screen, border_color, card_rect, 4, border_radius=8)
+            pygame.draw.rect(screen, border_color,
+                             card_rect, 4, border_radius=8)
 
     def draw(self, screen):
         screen.fill((20, 20, 20))
 
         title = self.title_font.render("Select Stage", True, (255, 0, 0))
-        screen.blit(title, (self.screen_width // 2 - title.get_width() // 2, 40))
+        screen.blit(title, (self.screen_width //
+                    2 - title.get_width() // 2, 40))
 
         self._draw_map_cards(screen)
 
@@ -158,4 +163,5 @@ class OnlineMapSelectFrame:
             status = "Waiting for host to select stage..."
 
         label = self.message_font.render(status, True, (170, 170, 170))
-        screen.blit(label, (self.screen_width // 2 - label.get_width() // 2, self.screen_height - 35))
+        screen.blit(label, (self.screen_width // 2 -
+                    label.get_width() // 2, self.screen_height - 35))

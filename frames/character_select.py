@@ -37,7 +37,8 @@ class CharacterSelectFrame:
                     continue
 
                 if isinstance(idle_anim, dict):
-                    select_region = char_data.get("select_idle_region", idle_anim.get("region"))
+                    select_region = char_data.get(
+                        "select_idle_region", idle_anim.get("region"))
                     select_frames = char_data.get("select_idle_frames", None)
                     idle_frames = load_animation_region(
                         char_data["path"],
@@ -51,7 +52,8 @@ class CharacterSelectFrame:
                     idle_path, _ = idle_anim
                     full_path = image_path(char_data["path"], idle_path)
                     idle_sheet = pygame.image.load(full_path).convert_alpha()
-                    icon_frames = [self._fit_surface(idle_sheet, self.icon_size, self.icon_size)]
+                    icon_frames = [self._fit_surface(
+                        idle_sheet, self.icon_size, self.icon_size)]
 
                 characters.append(
                     {
@@ -124,8 +126,10 @@ class CharacterSelectFrame:
     def draw(self, screen):
         screen.fill((20, 20, 20))
 
-        title = self.title_font.render("Select Your Fighter", True, (255, 0, 0))
-        screen.blit(title, (self.screen_width // 2 - title.get_width() // 2, 50))
+        title = self.title_font.render(
+            "Select Your Fighter", True, (255, 0, 0))
+        screen.blit(title, (self.screen_width //
+                    2 - title.get_width() // 2, 50))
 
         self._draw_character_cards(screen)
 
@@ -176,7 +180,8 @@ class CharacterSelectFrame:
             col = i % cols
             x = start_x + col * (self.card_size + self.gap_x)
             y = start_y + row * (self.card_size + self.gap_y)
-            frame_image = self._get_character_icon(character, i == self.selected_option)
+            frame_image = self._get_character_icon(
+                character, i == self.selected_option)
 
             card_rect = pygame.Rect(
                 x,
@@ -184,10 +189,12 @@ class CharacterSelectFrame:
                 self.card_size,
                 self.card_size,
             )
-            border_color = (255, 255, 0) if i == self.selected_option else (100, 100, 100)
+            border_color = (255, 255, 0) if i == self.selected_option else (
+                100, 100, 100)
 
             pygame.draw.rect(screen, (30, 30, 30), card_rect, border_radius=8)
-            pygame.draw.rect(screen, border_color, card_rect, 3, border_radius=8)
+            pygame.draw.rect(screen, border_color,
+                             card_rect, 3, border_radius=8)
             icon_rect = frame_image.get_rect(center=card_rect.center)
             screen.blit(frame_image, icon_rect)
 
@@ -201,7 +208,8 @@ class CharacterSelectFrame:
 
     def _build_icon_frames(self, frames):
         if not frames:
-            fallback = pygame.Surface((self.icon_size, self.icon_size), pygame.SRCALPHA)
+            fallback = pygame.Surface(
+                (self.icon_size, self.icon_size), pygame.SRCALPHA)
             return [fallback]
 
         return [self._fit_surface(frame, self.icon_size, self.icon_size) for frame in frames]

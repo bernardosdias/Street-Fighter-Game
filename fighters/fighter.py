@@ -73,8 +73,10 @@ class Fighter:
         for action_index in range(10):
             action_name = action_map[action_index]
             spec = self._resolve_action_spec(action_name, animations)
-            anim_filename, frame_count, region = self._parse_animation_spec(spec)
-            frames = self.load_animation_from_spritesheet(anim_filename, frame_count, region)
+            anim_filename, frame_count, region = self._parse_animation_spec(
+                spec)
+            frames = self.load_animation_from_spritesheet(
+                anim_filename, frame_count, region)
             animation_list.append(frames)
 
         return animation_list
@@ -190,13 +192,17 @@ class Fighter:
                         dx = 0
 
                     if key[pygame.K_y]:
-                        self._perform_attack(target, "special1", 14, apply_damage)
+                        self._perform_attack(
+                            target, "special1", 14, apply_damage)
                     elif key[pygame.K_u]:
-                        self._perform_attack(target, "special2", 16, apply_damage)
+                        self._perform_attack(
+                            target, "special2", 16, apply_damage)
                     elif key[pygame.K_r]:
-                        self._perform_attack(target, "attack1", 10, apply_damage)
+                        self._perform_attack(
+                            target, "attack1", 10, apply_damage)
                     elif key[pygame.K_t]:
-                        self._perform_attack(target, "attack2", 12, apply_damage)
+                        self._perform_attack(
+                            target, "attack2", 12, apply_damage)
 
                 if self.player == 2:
                     crouch_pressed = key[pygame.K_DOWN]
@@ -219,13 +225,17 @@ class Fighter:
                         dx = 0
 
                     if key[pygame.K_KP4]:
-                        self._perform_attack(target, "special1", 14, apply_damage)
+                        self._perform_attack(
+                            target, "special1", 14, apply_damage)
                     elif key[pygame.K_KP5]:
-                        self._perform_attack(target, "special2", 16, apply_damage)
+                        self._perform_attack(
+                            target, "special2", 16, apply_damage)
                     elif key[pygame.K_KP1]:
-                        self._perform_attack(target, "attack1", 10, apply_damage)
+                        self._perform_attack(
+                            target, "attack1", 10, apply_damage)
                     elif key[pygame.K_KP2]:
-                        self._perform_attack(target, "attack2", 12, apply_damage)
+                        self._perform_attack(
+                            target, "attack2", 12, apply_damage)
 
         self.vel_y += gravity
         dy += self.vel_y
@@ -240,7 +250,8 @@ class Fighter:
             self.jump = False
 
         self.flip = target.rect.centerx <= self.rect.centerx
-        back_input = (self.flip and moving_right_input) or ((not self.flip) and moving_left_input)
+        back_input = (self.flip and moving_right_input) or (
+            (not self.flip) and moving_left_input)
         self.defending = back_input and self.alive and (not round_over)
 
         if self.attack_cd > 0:

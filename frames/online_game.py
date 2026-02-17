@@ -66,7 +66,8 @@ class OnlineGameFrame:
         if character_name not in CHARACTERS:
             return self.default_sound
 
-        sound_file = CHARACTERS[character_name].get("attack_sound", "sword.wav")
+        sound_file = CHARACTERS[character_name].get(
+            "attack_sound", "sword.wav")
         sound_path = audio_path(sound_file)
 
         try:
@@ -89,7 +90,8 @@ class OnlineGameFrame:
 
         bg_path = self.map_path or image_path("background", "background.jpg")
         self.background = AnimatedBackground(bg_path, self.width, self.height)
-        self.victory_image = pygame.image.load(image_path("icons", "victory.png")).convert_alpha()
+        self.victory_image = pygame.image.load(
+            image_path("icons", "victory.png")).convert_alpha()
 
         self.count_font = pygame.font.Font(font_path(), 80)
         self.score_font = pygame.font.Font(font_path(), 30)
@@ -204,8 +206,10 @@ class OnlineGameFrame:
         if not state:
             return
 
-        self.fighter1.health = state.get("player1_health", self.fighter1.health)
-        self.fighter2.health = state.get("player2_health", self.fighter2.health)
+        self.fighter1.health = state.get(
+            "player1_health", self.fighter1.health)
+        self.fighter2.health = state.get(
+            "player2_health", self.fighter2.health)
 
         score = state.get("score")
         if isinstance(score, list) and len(score) == 2:
@@ -220,19 +224,26 @@ class OnlineGameFrame:
         if not state:
             return
 
-        self.opponent_fighter.rect.x = state.get("x", self.opponent_fighter.rect.x)
-        self.opponent_fighter.rect.y = state.get("y", self.opponent_fighter.rect.y)
-        self.opponent_fighter.action = state.get("action", self.opponent_fighter.action)
+        self.opponent_fighter.rect.x = state.get(
+            "x", self.opponent_fighter.rect.x)
+        self.opponent_fighter.rect.y = state.get(
+            "y", self.opponent_fighter.rect.y)
+        self.opponent_fighter.action = state.get(
+            "action", self.opponent_fighter.action)
         self.opponent_fighter.frame_index = state.get(
             "frame_index", self.opponent_fighter.frame_index
         )
-        self.opponent_fighter.flip = state.get("flip", self.opponent_fighter.flip)
+        self.opponent_fighter.flip = state.get(
+            "flip", self.opponent_fighter.flip)
         self.opponent_fighter.attacking = state.get(
             "attacking", self.opponent_fighter.attacking
         )
-        self.opponent_fighter.vel_y = state.get("vel_y", self.opponent_fighter.vel_y)
-        self.opponent_fighter.jump = state.get("jump", self.opponent_fighter.jump)
-        self.opponent_fighter.running = state.get("running", self.opponent_fighter.running)
+        self.opponent_fighter.vel_y = state.get(
+            "vel_y", self.opponent_fighter.vel_y)
+        self.opponent_fighter.jump = state.get(
+            "jump", self.opponent_fighter.jump)
+        self.opponent_fighter.running = state.get(
+            "running", self.opponent_fighter.running)
         self.opponent_fighter.defending = state.get(
             "defending", self.opponent_fighter.defending
         )
@@ -281,14 +292,17 @@ class OnlineGameFrame:
         self.draw_hp(screen, self.fighter2.health, 580, 20)
 
         self.draw_game_wins(screen, self.score[0], 40, 80, direction=1)
-        self.draw_game_wins(screen, self.score[1], self.width - 40, 80, direction=-1)
+        self.draw_game_wins(
+            screen, self.score[1], self.width - 40, 80, direction=-1)
 
         self.fighter1.draw_fighter(screen)
         self.fighter2.draw_fighter(screen)
 
         if self.intro_count > 0:
-            txt = self.count_font.render(str(self.intro_count), True, (255, 0, 0))
-            screen.blit(txt, (self.width // 2 - txt.get_width() // 2, self.height // 3))
+            txt = self.count_font.render(
+                str(self.intro_count), True, (255, 0, 0))
+            screen.blit(
+                txt, (self.width // 2 - txt.get_width() // 2, self.height // 3))
 
         if self.round_over:
             screen.blit(self.victory_image, (360, 150))
@@ -300,7 +314,8 @@ class OnlineGameFrame:
 
         esc_text = "ESC to disconnect"
         esc_surface = self.info_font.render(esc_text, True, (150, 150, 150))
-        screen.blit(esc_surface, (self.width - esc_surface.get_width() - 10, self.height - 30))
+        screen.blit(esc_surface, (self.width -
+                    esc_surface.get_width() - 10, self.height - 30))
 
     def draw_hp(self, screen, hp, x, y):
         ratio = hp / 100

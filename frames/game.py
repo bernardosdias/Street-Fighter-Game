@@ -61,7 +61,8 @@ class GameFrame:
         if character_name not in CHARACTERS:
             return self.default_sound
 
-        sound_file = CHARACTERS[character_name].get("attack_sound", "sword.wav")
+        sound_file = CHARACTERS[character_name].get(
+            "attack_sound", "sword.wav")
         sound_path = audio_path(sound_file)
 
         try:
@@ -84,7 +85,8 @@ class GameFrame:
 
         bg_path = self.map_path or image_path("background", "background.jpg")
         self.background = AnimatedBackground(bg_path, self.width, self.height)
-        self.victory_image = pygame.image.load(image_path("icons", "victory.png")).convert_alpha()
+        self.victory_image = pygame.image.load(
+            image_path("icons", "victory.png")).convert_alpha()
 
         self.count_font = pygame.font.Font(font_path(), 80)
         self.score_font = pygame.font.Font(font_path(), 30)
@@ -99,7 +101,8 @@ class GameFrame:
         self.background.update()
 
         if self.intro_count <= 0:
-            self.fighter1.move(self.width, self.height, None, self.fighter2, self.round_over)
+            self.fighter1.move(self.width, self.height, None,
+                               self.fighter2, self.round_over)
             if self.ai_enabled:
                 controls = self._get_ai_controls(self.fighter2, self.fighter1)
                 self.fighter2.move(
@@ -111,7 +114,8 @@ class GameFrame:
                     controls=controls,
                 )
             else:
-                self.fighter2.move(self.width, self.height, None, self.fighter1, self.round_over)
+                self.fighter2.move(self.width, self.height,
+                                   None, self.fighter1, self.round_over)
         else:
             if pygame.time.get_ticks() - self.last_count_update >= 1000:
                 self.intro_count -= 1
@@ -140,13 +144,15 @@ class GameFrame:
         self.draw_hp(screen, self.fighter2.health, 580, 20)
 
         self.draw_game_wins(screen, self.score[0], 40, 80, direction=1)
-        self.draw_game_wins(screen, self.score[1], self.width - 40, 80, direction=-1)
+        self.draw_game_wins(
+            screen, self.score[1], self.width - 40, 80, direction=-1)
 
         self.fighter1.draw_fighter(screen)
         self.fighter2.draw_fighter(screen)
 
         if self.intro_count > 0:
-            txt = self.count_font.render(str(self.intro_count), True, (255, 0, 0))
+            txt = self.count_font.render(
+                str(self.intro_count), True, (255, 0, 0))
             screen.blit(txt, (self.width // 2, self.height // 3))
 
         if self.round_over:

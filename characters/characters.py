@@ -1,8 +1,10 @@
 from pathlib import Path
 
 
-SSF2_DIR = Path("multimedia/images/Super Street Fighter II The New Challengers")
-SUPPORTED_EXTENSIONS = {".png", ".jpg", ".jpeg", ".jfif", ".webp", ".bmp", ".gif"}
+SSF2_DIR = Path(
+    "multimedia/images/Super Street Fighter II The New Challengers")
+SUPPORTED_EXTENSIONS = {".png", ".jpg",
+                        ".jpeg", ".jfif", ".webp", ".bmp", ".gif"}
 BASE_IMAGES_DIR = Path("multimedia/images").resolve()
 
 # Relative atlas regions: (x, y, w, h)
@@ -73,11 +75,13 @@ def _iter_character_sheets():
     for char_dir in sorted(SSF2_DIR.iterdir()):
         if not char_dir.is_dir():
             continue
-        sheets = sorted([f for f in char_dir.iterdir() if f.is_file() and f.suffix.lower() in SUPPORTED_EXTENSIONS])
+        sheets = sorted([f for f in char_dir.iterdir() if f.is_file()
+                        and f.suffix.lower() in SUPPORTED_EXTENSIONS])
         if not sheets:
             continue
         # Prefer atlas-like source sheets first (jpg/gif), then fallback to first file.
-        preferred = [f for f in sheets if f.suffix.lower() in {".jpg", ".jpeg", ".gif", ".jfif", ".webp", ".bmp"}]
+        preferred = [f for f in sheets if f.suffix.lower(
+        ) in {".jpg", ".jpeg", ".gif", ".jfif", ".webp", ".bmp"}]
         entries.append((char_dir, preferred[0] if preferred else sheets[0]))
     return entries
 
@@ -129,7 +133,8 @@ def _build_move_specs_from_dir(char_dir):
 def _build_characters():
     characters = {}
     for char_dir, sheet in _iter_character_sheets():
-        relative_dir = str(char_dir.resolve().relative_to(BASE_IMAGES_DIR)).replace("\\", "/")
+        relative_dir = str(char_dir.resolve().relative_to(
+            BASE_IMAGES_DIR)).replace("\\", "/")
         character_name = _safe_title(char_dir.name)
         scale = _estimate_scale(sheet)
         select_override = SELECT_IDLE_OVERRIDES.get(character_name, {})

@@ -36,10 +36,10 @@ while run:
     if next_frame:
         if next_frame["next"] == "menu":
             current_frame = MenuFrame(SCREEN_WIDTH, SCREEN_HEIGHT)
-        
+
         elif next_frame["next"] == "character_select":
             current_frame = CharacterSelectFrame(SCREEN_WIDTH, SCREEN_HEIGHT)
-        
+
         elif next_frame["next"] == "game":
             default_character = next(iter(CHARACTERS.keys()), "Ryu")
             character = next_frame.get("character", default_character)
@@ -57,21 +57,21 @@ while run:
                 SCREEN_HEIGHT,
                 character=next_frame["character"],
             )
-        
+
         # === ONLINE MULTIPLAYER ===
-        
+
         elif next_frame["next"] == "online_menu":
             current_frame = OnlineMenuFrame(SCREEN_WIDTH, SCREEN_HEIGHT)
-        
+
         elif next_frame["next"] == "online_character_select":
             current_frame = OnlineCharacterSelectFrame(
-                SCREEN_WIDTH, 
+                SCREEN_WIDTH,
                 SCREEN_HEIGHT,
                 client=next_frame["client"],
                 player_id=next_frame["player_id"],
                 is_host=next_frame["is_host"]
             )
-        
+
         elif next_frame["next"] == "online_game":
             current_frame = OnlineGameFrame(
                 SCREEN_WIDTH,

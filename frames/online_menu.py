@@ -5,6 +5,7 @@ from network.client import GameClient
 from network.protocol import MessageType
 from core.assets import font_path, image_path
 
+
 class OnlineMenuFrame:
     """Menu para multiplayer online"""
 
@@ -155,7 +156,7 @@ class OnlineMenuFrame:
             # Conectar como cliente ao próprio servidor
             self.client = GameClient()
             if self.client.connect("127.0.0.1"):
-                local_ip = "100.125.253.127" #self.server.get_local_ip()
+                local_ip = "100.125.253.127"  # self.server.get_local_ip()
                 self.message = f"Servidor iniciado!"
                 self.state = "WAITING"
                 self.error_message = f"Partilha este IP: {local_ip}"

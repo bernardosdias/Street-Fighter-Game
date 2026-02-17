@@ -48,7 +48,8 @@ class OnlineCharacterSelectFrame:
                     continue
 
                 if isinstance(idle_anim, dict):
-                    select_region = char_data.get("select_idle_region", idle_anim.get("region"))
+                    select_region = char_data.get(
+                        "select_idle_region", idle_anim.get("region"))
                     select_frames = char_data.get("select_idle_frames", None)
                     idle_frames = load_animation_region(
                         char_data["path"],
@@ -62,7 +63,8 @@ class OnlineCharacterSelectFrame:
                     idle_path, _ = idle_anim
                     full_path = image_path(char_data["path"], idle_path)
                     idle_sheet = pygame.image.load(full_path).convert_alpha()
-                    icon_frames = [self._fit_surface(idle_sheet, self.icon_size, self.icon_size)]
+                    icon_frames = [self._fit_surface(
+                        idle_sheet, self.icon_size, self.icon_size)]
 
                 characters.append(
                     {
@@ -161,11 +163,14 @@ class OnlineCharacterSelectFrame:
     def draw(self, screen):
         screen.fill((20, 20, 20))
 
-        title = self.title_font.render("Select Your Fighter", True, (255, 0, 0))
-        screen.blit(title, (self.screen_width // 2 - title.get_width() // 2, 50))
+        title = self.title_font.render(
+            "Select Your Fighter", True, (255, 0, 0))
+        screen.blit(title, (self.screen_width //
+                    2 - title.get_width() // 2, 50))
 
         player_text = f"You are Player {self.player_id}"
-        player_label = self.message_font.render(player_text, True, (255, 255, 0))
+        player_label = self.message_font.render(
+            player_text, True, (255, 255, 0))
         screen.blit(player_label, (20, 20))
 
         self._draw_character_cards(screen)
@@ -185,16 +190,21 @@ class OnlineCharacterSelectFrame:
                 opponent_status = "Opponent is selecting..."
 
         status_label = self.message_font.render(status, True, (200, 200, 200))
-        screen.blit(status_label, (self.screen_width // 2 - status_label.get_width() // 2, 520))
+        screen.blit(status_label, (self.screen_width //
+                    2 - status_label.get_width() // 2, 520))
 
         if opponent_status:
-            opp_label = self.message_font.render(opponent_status, True, (100, 200, 255))
-            screen.blit(opp_label, (self.screen_width // 2 - opp_label.get_width() // 2, 550))
+            opp_label = self.message_font.render(
+                opponent_status, True, (100, 200, 255))
+            screen.blit(opp_label, (self.screen_width //
+                        2 - opp_label.get_width() // 2, 550))
 
-        esc_label = self.message_font.render("ESC to disconnect", True, (150, 150, 150))
+        esc_label = self.message_font.render(
+            "ESC to disconnect", True, (150, 150, 150))
         screen.blit(
             esc_label,
-            (self.screen_width // 2 - esc_label.get_width() // 2, self.screen_height - 25),
+            (self.screen_width // 2 - esc_label.get_width() //
+             2, self.screen_height - 25),
         )
 
     def _grid_cols(self):
@@ -231,7 +241,8 @@ class OnlineCharacterSelectFrame:
             col = i % cols
             x = start_x + col * (self.card_size + self.gap_x)
             y = start_y + row * (self.card_size + self.gap_y)
-            frame_image = self._get_character_icon(character, i == self.selected_option)
+            frame_image = self._get_character_icon(
+                character, i == self.selected_option)
 
             card_rect = pygame.Rect(
                 x,
@@ -248,7 +259,8 @@ class OnlineCharacterSelectFrame:
                 border_color = (100, 100, 100)
 
             pygame.draw.rect(screen, (30, 30, 30), card_rect, border_radius=8)
-            pygame.draw.rect(screen, border_color, card_rect, 3, border_radius=8)
+            pygame.draw.rect(screen, border_color,
+                             card_rect, 3, border_radius=8)
             icon_rect = frame_image.get_rect(center=card_rect.center)
             screen.blit(frame_image, icon_rect)
 
@@ -262,7 +274,8 @@ class OnlineCharacterSelectFrame:
 
     def _build_icon_frames(self, frames):
         if not frames:
-            fallback = pygame.Surface((self.icon_size, self.icon_size), pygame.SRCALPHA)
+            fallback = pygame.Surface(
+                (self.icon_size, self.icon_size), pygame.SRCALPHA)
             return [fallback]
 
         return [self._fit_surface(frame, self.icon_size, self.icon_size) for frame in frames]

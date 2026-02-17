@@ -73,8 +73,10 @@ class GameServer:
     def start(self):
         """Inicia o servidor"""
         try:
-            self.server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-            self.server_socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+            self.server_socket = socket.socket(
+                socket.AF_INET, socket.SOCK_STREAM)
+            self.server_socket.setsockopt(
+                socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
             self.server_socket.bind((self.host, self.port))
             self.server_socket.listen(self.max_players)
             self.running = True
@@ -82,10 +84,12 @@ class GameServer:
             print(f"Servidor iniciado em {self.host}:{self.port}")
             print(f"Aguardando jogadores... (0/{self.max_players})")
 
-            accept_thread = threading.Thread(target=self._accept_connections, daemon=True)
+            accept_thread = threading.Thread(
+                target=self._accept_connections, daemon=True)
             accept_thread.start()
 
-            game_loop_thread = threading.Thread(target=self._game_loop, daemon=True)
+            game_loop_thread = threading.Thread(
+                target=self._game_loop, daemon=True)
             game_loop_thread.start()
             return True
         except Exception as e:
@@ -120,7 +124,8 @@ class GameServer:
                 if len(self.players) >= self.max_players:
                     error_msg = create_error_message("Servidor cheio!")
                     try:
-                        client_socket.send(NetworkProtocol.encode_message(error_msg))
+                        client_socket.send(
+                            NetworkProtocol.encode_message(error_msg))
                     except Exception:
                         pass
                     client_socket.close()
@@ -142,11 +147,13 @@ class GameServer:
                 self._update_player_count()
 
                 print(f"Player {player_id} conectado de {address}")
-                print(f"Jogadores conectados: {self.player_count}/{self.max_players}")
+                print(
+                    f"Jogadores conectados: {self.player_count}/{self.max_players}")
 
                 ack_msg = Message(
                     MessageType.CONNECT_ACK,
-                    {"player_id": player_id, "message": f"Conectado como Player {player_id}"},
+                    {"player_id": player_id,
+                        "message": f"Conectado como Player {player_id}"},
                 )
                 try:
                     client_socket.send(NetworkProtocol.encode_message(ack_msg))
@@ -178,7 +185,8 @@ class GameServer:
 
                 buffer += data
                 while NetworkProtocol.DELIMITER in buffer:
-                    message_data, buffer = buffer.split(NetworkProtocol.DELIMITER, 1)
+                    message_data, buffer = buffer.split(
+                        NetworkProtocol.DELIMITER, 1)
                     try:
                         message_str = message_data.decode("utf-8")
                         message = Message.from_json(message_str)
@@ -205,7 +213,8 @@ class GameServer:
                     return
                 self.players[player_id]["character"] = character
                 self.players[player_id]["ready"] = True
-                others = [pid for pid in self.players.keys() if pid != player_id]
+                others = [pid for pid in self.players.keys() if pid !=
+                          player_id]
                 both_ready = (
                     len(self.players) == self.max_players
                     and all(p["ready"] for p in self.players.values())
@@ -225,8 +234,10 @@ class GameServer:
         if message.msg_type == MessageType.PLAYER_STATE_UPDATE:
             with self.players_lock:
                 if player_id in self.players:
-                    self.players[player_id]["state"] = message.data.get("state", {})
-            self._send_to_other_player(player_id, message, include_player_id=False)
+                    self.players[player_id]["state"] = message.data.get(
+                        "state", {})
+            self._send_to_other_player(
+                player_id, message, include_player_id=False)
             return
 
         if message.msg_type == MessageType.HIT:
@@ -245,7 +256,8 @@ class GameServer:
             return
 
         if message.msg_type == MessageType.PLAYER_INPUT:
-            self._send_to_other_player(player_id, message, include_player_id=True)
+            self._send_to_other_player(
+                player_id, message, include_player_id=True)
             return
 
         if message.msg_type == MessageType.ATTACK:
@@ -329,7 +341,8 @@ class GameServer:
 
     def _send_to_other_player(self, player_id, message, include_player_id):
         with self.players_lock:
-            other_players = [pid for pid in self.players.keys() if pid != player_id]
+            other_players = [
+                pid for pid in self.players.keys() if pid != player_id]
 
         if include_player_id:
             message.data["player_id"] = player_id

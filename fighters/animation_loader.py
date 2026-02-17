@@ -31,7 +31,8 @@ def _split_strip(sheet, scale, frame_count=None):
         auto_frames = _split_by_detected_columns(sheet, scale)
         if auto_frames:
             return auto_frames
-        frame_count = max(1, min(16, round(sheet_width / max(1, frame_height))))
+        frame_count = max(
+            1, min(16, round(sheet_width / max(1, frame_height))))
 
     frame_width = max(1, sheet_width // frame_count)
     frames = []
@@ -130,7 +131,8 @@ def _split_by_detected_columns(sheet, scale):
             if scale != 1:
                 crop = pygame.transform.scale(
                     crop,
-                    (int(crop.get_width() * scale), int(crop.get_height() * scale)),
+                    (int(crop.get_width() * scale),
+                     int(crop.get_height() * scale)),
                 )
             frames.append(crop)
 
@@ -262,7 +264,8 @@ def _trim_and_key_frame(surface):
     y0 = max(0, y_min - pad)
     x1 = min(width - 1, x_max + pad)
     y1 = min(height - 1, y_max + pad)
-    trimmed = surface.subsurface(pygame.Rect(x0, y0, x1 - x0 + 1, y1 - y0 + 1)).copy()
+    trimmed = surface.subsurface(pygame.Rect(
+        x0, y0, x1 - x0 + 1, y1 - y0 + 1)).copy()
 
     # Apply chroma-like transparency based on detected background color.
     try:
@@ -277,7 +280,8 @@ def _trim_and_key_frame(surface):
                 diff = abs(r - bg[0]) + abs(g - bg[1]) + abs(b - bg[2])
                 if diff < alpha_threshold:
                     out_pix[x, y] = (r, g, b, 0)
-        trimmed = pygame.image.fromstring(out.tobytes(), out.size, "RGBA").convert_alpha()
+        trimmed = pygame.image.fromstring(
+            out.tobytes(), out.size, "RGBA").convert_alpha()
     except Exception:
         pass
 
