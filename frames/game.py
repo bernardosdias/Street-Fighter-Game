@@ -11,7 +11,7 @@ class GameFrame:
         self.width = width
         self.height = height
         available_characters = list(CHARACTERS.keys())
-        fallback_player1 = available_characters[0] if available_characters else "Ryu"
+        fallback_player1 = available_characters[0] if available_characters else "Balrog"
         fallback_player2 = (
             available_characters[1]
             if len(available_characters) > 1

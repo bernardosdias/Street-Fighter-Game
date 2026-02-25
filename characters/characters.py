@@ -8,6 +8,16 @@ SUPPORTED_EXTENSIONS = {".png", ".jpg",
 BASE_IMAGES_DIR = Path("multimedia/images").resolve()
 NON_CHUNLI_GAME_SCALE_MULTIPLIER = 2.0
 SCALED_2X_CHARACTERS = {"Cammy", "Dee Jay", "Balrog", "Dhalsim"}
+CROPPED_CHARACTER_ORDER = [
+    "Balrog",
+    "Blanka",
+    "Cammy",
+    "Chun- Li",
+    "Dee Jay",
+    "Dhalsim",
+    "E. Honda",
+    "Fei Long",
+]
 
 # Relative atlas regions: (x, y, w, h)
 REGIONS = {
@@ -74,7 +84,10 @@ def _iter_character_sheets():
         return []
 
     entries = []
-    for char_dir in sorted(SSF2_DIR.iterdir()):
+    for char_name in CROPPED_CHARACTER_ORDER:
+        char_dir = SSF2_DIR / char_name
+        if not char_dir.exists() or not char_dir.is_dir():
+            continue
         if not char_dir.is_dir():
             continue
         sheets = sorted([f for f in char_dir.iterdir() if f.is_file()

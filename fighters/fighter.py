@@ -1,6 +1,7 @@
 import pygame
 
 from characters.characters import CHARACTERS
+from core.assets import audio_path
 from fighters.animation_loader import load_animation, load_animation_region
 
 
@@ -9,6 +10,8 @@ class Fighter:
         self.player = player
         self.flip = flip
         self.attack_sound = sound
+        self.punch_sound = self._load_sound("Punch.wav", fallback=sound)
+        self.hit_sound = self._load_sound("Hit.wav")
 
         if character_name not in CHARACTERS:
             raise ValueError(f"Character '{character_name}' not found")
@@ -80,6 +83,14 @@ class Fighter:
             animation_list.append(frames)
 
         return animation_list
+
+    def _load_sound(self, filename, fallback=None):
+        try:
+            snd = pygame.mixer.Sound(audio_path(filename))
+            snd.set_volume(0.3)
+            return snd
+        except Exception:
+            return fallback
 
     def _resolve_action_spec(self, action_name, animations):
         move_key = self.action_moves.get(action_name)
@@ -266,7 +277,10 @@ class Fighter:
 
         self.attacking = True
         self.attack_move_key = move_key
-        self.attack_sound.play()
+        if self.punch_sound:
+            self.punch_sound.play()
+        elif self.attack_sound:
+            self.attack_sound.play()
 
         if move_key == "attack1":
             self.attack_type = 1
@@ -302,6 +316,7 @@ class Fighter:
                 return
             target.health -= damage
             target.hit = True
+            target.play_hit_sound()
 
     def update(self):
         if self.health <= 0:
@@ -365,3 +380,7 @@ class Fighter:
         draw_x += self.offset[0]
         draw_y += self.offset[1]
         surface.blit(img, (draw_x, draw_y))
+
+    def play_hit_sound(self):
+        if self.hit_sound:
+            self.hit_sound.play()

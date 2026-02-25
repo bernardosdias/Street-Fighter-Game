@@ -41,7 +41,7 @@ while run:
             current_frame = CharacterSelectFrame(SCREEN_WIDTH, SCREEN_HEIGHT)
 
         elif next_frame["next"] == "game":
-            default_character = next(iter(CHARACTERS.keys()), "Ryu")
+            default_character = next(iter(CHARACTERS.keys()), "Balrog")
             character = next_frame.get("character", default_character)
             map_path = next_frame.get("map_path")
             current_frame = GameFrame(

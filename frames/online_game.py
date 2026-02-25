@@ -206,10 +206,16 @@ class OnlineGameFrame:
         if not state:
             return
 
+        prev_p1_health = self.fighter1.health
+        prev_p2_health = self.fighter2.health
         self.fighter1.health = state.get(
             "player1_health", self.fighter1.health)
         self.fighter2.health = state.get(
             "player2_health", self.fighter2.health)
+        if self.fighter1.health < prev_p1_health:
+            self.fighter1.play_hit_sound()
+        if self.fighter2.health < prev_p2_health:
+            self.fighter2.play_hit_sound()
 
         score = state.get("score")
         if isinstance(score, list) and len(score) == 2:

@@ -1,7 +1,7 @@
 from network.protocol import MessageType
 from characters.characters import CHARACTERS
 import pygame
-from core.assets import font_path, image_path
+from core.assets import audio_path, font_path, image_path
 from fighters.animation_loader import load_animation_region
 
 
@@ -37,6 +37,7 @@ class OnlineCharacterSelectFrame:
         self.title_font = pygame.font.Font(font_path(), 60)
         self.option_font = pygame.font.Font(font_path(), 40)
         self.message_font = pygame.font.Font(font_path(), 25)
+        self.move_sound, self.confirm_sound = self._load_ui_sounds()
 
     def _load_characters(self):
         characters = []
@@ -135,25 +136,30 @@ class OnlineCharacterSelectFrame:
                         self._move_selection(-1, 0)
                         self.anim_index = 0
                         self.anim_timer = pygame.time.get_ticks()
+                        self._play_sound(self.move_sound)
 
                     elif event.key == pygame.K_RIGHT:
                         self._move_selection(1, 0)
                         self.anim_index = 0
                         self.anim_timer = pygame.time.get_ticks()
+                        self._play_sound(self.move_sound)
 
                     elif event.key == pygame.K_UP:
                         self._move_selection(0, -1)
                         self.anim_index = 0
                         self.anim_timer = pygame.time.get_ticks()
+                        self._play_sound(self.move_sound)
 
                     elif event.key == pygame.K_DOWN:
                         self._move_selection(0, 1)
                         self.anim_index = 0
                         self.anim_timer = pygame.time.get_ticks()
+                        self._play_sound(self.move_sound)
 
                     elif event.key == pygame.K_RETURN:
                         self.my_character = self.characters[self.selected_option]["name"]
                         self.ready = True
+                        self._play_sound(self.confirm_sound)
                         self.client.select_character(self.my_character)
 
                 if event.key == pygame.K_ESCAPE:
@@ -306,3 +312,23 @@ class OnlineCharacterSelectFrame:
         out = pygame.Surface((box_w, box_h), pygame.SRCALPHA)
         out.blit(scaled, ((box_w - target_w) // 2, (box_h - target_h) // 2))
         return out
+
+    def _load_ui_sounds(self):
+        move_sound = None
+        confirm_sound = None
+        try:
+            move_sound = pygame.mixer.Sound(audio_path("slap.wav"))
+            move_sound.set_volume(0.25)
+        except Exception:
+            pass
+        try:
+            confirm_sound = pygame.mixer.Sound(
+                audio_path("2-character-select-the-new-challengers-version.mp3"))
+            confirm_sound.set_volume(0.35)
+        except Exception:
+            confirm_sound = move_sound
+        return move_sound, confirm_sound
+
+    def _play_sound(self, sound):
+        if sound:
+            sound.play()
